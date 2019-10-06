@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>index</title>
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+</head>
+<body>
+<h1>Hello world</h1>
+<h2 id="1"></h2>
+<button id="mybutton">Something</button>
+<button id="func2">Function 2</button>
+<button id="func3"> Function 3</button>
+
+<script>
+
+    function myfunc() {
+        $.get("/rest", function (data, status) {
+            $('#1').html(data);
+        })
+    }
+
+    $('#mybutton').click(function () {
+        myfunc();
+    });
+
+    function func2() {
+        $.get("/rest/list", function (data) {
+            data.forEach(function (element) {
+                $('#1').append("<br>" + element);
+            })
+        })
+    }
+
+    $('#func2').click(function () {
+        func2();
+    });
+
+    function func3() {
+        $.get("/rest/two", function (data) {
+            // var json = JSON.parse(data);
+            // var name = json["name"];
+
+            $('#func3').html(data.name);
+            var list = data.persons;
+
+            var retVal = '';
+            list.forEach(function (el) {
+                retVal += el.name + el.surname+"  ";
+            });
+            alert(retVal);
+            // var personList = data.getPersons();
+        })
+    }
+
+    $('#func3').click(function () {
+        func3()
+    })
+</script>
+
+</body>
+</html>
