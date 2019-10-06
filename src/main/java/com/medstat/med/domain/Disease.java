@@ -1,23 +1,25 @@
 package com.medstat.med.domain;
 
 import lombok.Data;
+import org.hibernate.annotations.NaturalId;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.Set;
 
-//@Entity
-//@Data
+@Entity
+@Data
 public class Disease {
 
 
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.AUTO)
-//    private Integer id;
-//
-//    private String name;
-//
-//
-//
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer id;
+
+    @NaturalId
+    private String name;
+
+    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "diseases")
+    private Set<Note> notes;
+
+
 }

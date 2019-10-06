@@ -19,18 +19,26 @@ public class Note {
     @ManyToMany(fetch = FetchType.EAGER/*, cascade = CascadeType.ALL*/)
     @JoinTable(
             name = "note_drug",
-            joinColumns = { @JoinColumn(name = "note_id") },
-            inverseJoinColumns = { @JoinColumn(name = "drug_id") }
+            joinColumns = {@JoinColumn(name = "note_id")},
+            inverseJoinColumns = {@JoinColumn(name = "drug_id")}
     )
     private Set<Drug> drugs;
 
-//    @ManyToOne(fetch = FetchType.EAGER)
-//    @JoinColumn(name = "symptom_id")
-//    private List<Symptom> symptom;
-//
-//    @ManyToOne(fetch = FetchType.EAGER)
-//    @JoinColumn(name = "disease_id")
-//    private List<Disease> disease;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "note_symptom",
+            joinColumns = {@JoinColumn(name = "note_id")},
+            inverseJoinColumns = {@JoinColumn(name = "symptom_id")}
+    )
+    private Set<Symptom> symptoms;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "note_disease",
+            joinColumns = {@JoinColumn(name = "note_id")},
+            inverseJoinColumns = {@JoinColumn(name = "disease_id")}
+    )
+    private Set<Disease> diseases;
 
     private String comment;
 

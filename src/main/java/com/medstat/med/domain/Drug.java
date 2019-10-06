@@ -1,6 +1,7 @@
 package com.medstat.med.domain;
 
 import lombok.*;
+import org.hibernate.annotations.NaturalId;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -15,6 +16,7 @@ public class Drug {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
+    @NaturalId
     private String name;
 
     @ManyToMany(fetch = FetchType.EAGER, mappedBy = "drugs"/*, cascade = CascadeType.ALL*/)
