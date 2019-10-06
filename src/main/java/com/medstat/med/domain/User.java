@@ -9,6 +9,7 @@ import java.util.Collection;
 import org.hibernate.annotations.NaturalId;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
 import java.util.Set;
 
 @Entity
@@ -30,6 +31,9 @@ public class User implements UserDetails {
     @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)
     private Set<Role> roles;
+
+    @OneToMany(mappedBy = "author", fetch = FetchType.EAGER)
+    private Set<MyLikes> likes;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
