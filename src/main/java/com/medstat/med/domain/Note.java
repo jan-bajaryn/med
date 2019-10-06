@@ -3,7 +3,6 @@ package com.medstat.med.domain;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -16,13 +15,6 @@ public class Note {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    @ManyToMany(fetch = FetchType.EAGER/*, cascade = CascadeType.ALL*/)
-    @JoinTable(
-            name = "note_drug",
-            joinColumns = {@JoinColumn(name = "note_id")},
-            inverseJoinColumns = {@JoinColumn(name = "drug_id")}
-    )
-    private Set<Drug> drugs;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
@@ -41,5 +33,6 @@ public class Note {
     private Set<Disease> diseases;
 
     private String comment;
+
 
 }
