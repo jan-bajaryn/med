@@ -27,7 +27,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
 //                разрешаем полный доступ для определенных страниц
-                .antMatchers("/", "/index", "/registration", "/static").permitAll()
+                .antMatchers("/", "/index", "/registration", "/static", "/rest/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
