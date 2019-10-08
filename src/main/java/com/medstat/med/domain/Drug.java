@@ -10,6 +10,7 @@ import java.util.Set;
 @Getter
 @Setter
 @RequiredArgsConstructor
+@NoArgsConstructor
 public class Drug {
 
     @Id
@@ -17,6 +18,7 @@ public class Drug {
     private Integer id;
 
     @NaturalId
+    @NonNull
     private String name;
 
     @ManyToMany(fetch = FetchType.EAGER, mappedBy = "drugs"/*, cascade = CascadeType.ALL*/)

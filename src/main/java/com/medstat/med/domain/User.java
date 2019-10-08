@@ -1,7 +1,6 @@
 package com.medstat.med.domain;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -16,14 +15,21 @@ import java.util.Set;
 @Table(name = "usr")
 @Getter
 @Setter
+@RequiredArgsConstructor
+@NoArgsConstructor
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @NaturalId
+    @NonNull
     private String username;
+
+    @NonNull
     private String password;
+
+    @NonNull
     private boolean active;
 
 
@@ -34,6 +40,9 @@ public class User implements UserDetails {
 
     @OneToMany(mappedBy = "author", fetch = FetchType.EAGER)
     private Set<MyLikes> likes;
+
+    @OneToMany(mappedBy = "author", fetch = FetchType.EAGER)
+    private Set<Note> notes;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

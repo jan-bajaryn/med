@@ -44,24 +44,6 @@ public class WebController {
     @GetMapping
     public String index() {
         log.info("count = {}", count);
-//
-//        Set<Drug> drugs = new HashSet<>();
-//        Drug drug = new Drug();
-//        drug.setName("drug1");
-//        Drug drug2 = new Drug();
-//        drug2.setName("drug2");
-//
-//        drugRepo.save(drug);
-//        drugRepo.save(drug2);
-//
-//        drugs.add(drug);
-//        drugs.add(drug2);
-//
-//        Note note = new Note();
-//        note.setDrugs(drugs);
-//        note.setComment("myComment");
-//
-//        noteRepo.save(note);
 
         return "index";
     }

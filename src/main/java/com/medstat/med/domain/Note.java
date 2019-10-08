@@ -40,6 +40,10 @@ public class Note {
     )
     private Set<Disease> diseases;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id")
+    private User author;
+
     private String comment;
 
 }
