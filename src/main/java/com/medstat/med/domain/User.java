@@ -39,10 +39,13 @@ public class User implements UserDetails {
     private Set<Role> roles;
 
     @OneToMany(mappedBy = "author", fetch = FetchType.EAGER)
-    private Set<MyLikes> likes;
+    private Set<Mylike> likes;
 
     @OneToMany(mappedBy = "author", fetch = FetchType.EAGER)
     private Set<Note> notes;
+
+    @OneToMany(mappedBy = "author", fetch = FetchType.EAGER)
+    private Set<Comment> comments;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

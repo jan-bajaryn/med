@@ -4,9 +4,9 @@ import lombok.Data;
 
 import javax.persistence.*;
 
-@Entity(name = "mylikes")
+@Entity(name = "mylike")
 @Data
-public class MyLikes {
+public class Mylike {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -16,5 +16,9 @@ public class MyLikes {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User author;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "note_id")
+    private Note note;
 
 }

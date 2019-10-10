@@ -3,7 +3,6 @@ package com.medstat.med.domain;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -14,7 +13,7 @@ public class Note {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    private Long id;
 
     @ManyToMany(fetch = FetchType.EAGER/*, cascade = CascadeType.ALL*/)
     @JoinTable(
@@ -43,6 +42,13 @@ public class Note {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User author;
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "note")
+    private Set<Mylike> Mylikes;
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "note")
+    private Set<Comment> comments;
+
 
     private String comment;
 
