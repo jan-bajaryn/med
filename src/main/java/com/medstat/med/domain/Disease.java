@@ -18,7 +18,7 @@ public class Disease {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    private Long id;
 
     @NaturalId
     @NonNull

@@ -24,7 +24,7 @@ class CommentServiceTest {
     private static final String USER_PASSWORD_TEST = "password1";
     private static final String NOTE_COMMENT_TEST = "this is my comment";
     private static final String COMMENT_TEXT_TEST = "this is very bad post.";
-    
+
     @Autowired
     NoteService noteService;
 
