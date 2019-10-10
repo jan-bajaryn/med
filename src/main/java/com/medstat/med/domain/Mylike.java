@@ -4,7 +4,8 @@ import lombok.Data;
 
 import javax.persistence.*;
 
-@Entity(name = "mylike")
+@Entity
+@Table(name = "mylike")
 @Data
 public class Mylike {
 
