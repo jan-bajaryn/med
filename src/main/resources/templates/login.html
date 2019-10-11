@@ -1,10 +1,25 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Log in</title>
+    <title>Spring Security Example </title>
 </head>
 <body>
-    <h1>Still not implemented</h1>
+
+
+<form th:action="@{/login}" method="post">
+    <div class="form-group">
+        <label class="col-sm-2 col-form-label">User Name
+            <input class="form-control" type="text" name="username" placeholder="Enter your login"/>
+        </label>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 col-form-label"> Password:
+            <input type="password" name="password" class="form-control" placeholder="Password"/>
+        </label>
+    </div>
+    <div>
+        <input type="submit" value="Sign In" class="btn btn-primary"/>
+    </div>
+</form>
 </body>
 </html>

@@ -25,52 +25,29 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .authorizeRequests()
+                    .authorizeRequests()
 //                разрешаем полный доступ для определенных страниц
-                .antMatchers("/", "/index", "/registration", "/static").permitAll()
-                .anyRequest().authenticated()
+                    .antMatchers("/", "/index", "/registration", "/static", "/activate/*").permitAll()
+                    .anyRequest().authenticated()
                 .and()
-                .formLogin()
-                .loginPage("/login")
-                .permitAll()
+                    .formLogin()
+                    .loginPage("/login")
+                    .permitAll()
                 .and()
-                .logout()
-                .permitAll();
+                    .logout()
+                    .permitAll();
     }
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/static/**");
+            web.ignoring().antMatchers("/static/**");
     }
 
-    //this we only need to maintain one user to give him access to log in
-//    @Bean
-//    @Override
-//    public UserDetailsService userDetailsService() {
-//        UserDetails user =
-//                User.withDefaultPasswordEncoder()
-//                        .username("u")
-//                        .password("p")
-//                        .roles("USER")
-//                        .build();
-//
-//        return new InMemoryUserDetailsManager(user);
-//    }
 
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userService)
                 .passwordEncoder(NoOpPasswordEncoder.getInstance());
-
-//auth.jdbcAuthentication()
-//                .dataSource(dataSource)
-//                .passwordEncoder(NoOpPasswordEncoder.getInstance());
-
-//                .usersByUsernameQuery("select " +
-//                        "username, password, active " +
-//                        "from usr where username=?")
-//                .authoritiesByUsernameQuery("select u.username, ur.roles from usr u inner join user_role ur on " +
-//                        "u.id = ur.user_id where u.username=?");
     }
 }
