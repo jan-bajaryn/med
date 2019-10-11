@@ -1,11 +1,19 @@
 package com.medstat.med.domain;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.Tolerate;
 
 import javax.persistence.*;
 
+
 @Entity
 @Table(name = "mylike")
+@Builder(toBuilder = true)
+@AllArgsConstructor
+@NoArgsConstructor
 @Data
 public class Mylike {
 
@@ -22,4 +30,8 @@ public class Mylike {
     @JoinColumn(name = "note_id")
     private Note note;
 
+//    @Tolerate
+//    public Mylike() {
+//    }
 }
+

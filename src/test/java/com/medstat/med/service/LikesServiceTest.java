@@ -66,21 +66,6 @@ class LikesServiceTest {
 
         userRepo.deleteByUsername(USER_TEST);
         noteRepo.deleteByComment(NOTE_TEST);
-//        user = userRepo.findByUsername(USER_TEST);
-//        user.getLikes().clear();
-
-//        userRepo.save(user);
-
-//        userRepo.deleteByUsername(USER_TEST);
-
-
-//        myLikeRepo.deleteAll();
-
-//        note = noteRepo.findById(note.getId()).get();
-//        note.getMylikes().clear();
-//        noteRepo.save(note);
-//        noteRepo.deleteByComment(NOTE_TEST);
-
 
     }
 }

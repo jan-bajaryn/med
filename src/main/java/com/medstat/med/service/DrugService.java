@@ -14,7 +14,7 @@ public class DrugService {
 
     public boolean addDrug(@NonNull String name){
         try{
-            drugRepo.save(new Drug(name));
+            drugRepo.save(Drug.builder().name(name).build());
             return true;
         }catch (Exception e){
             return false;

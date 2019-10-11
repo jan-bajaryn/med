@@ -3,8 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <title>index</title>
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 </head>
 <body>
+<p style="font-family: Verdana, sans-serif;
+ font-size: 12px; font-style: normal;
+  font-variant: normal; font-weight: normal;
+   letter-spacing: normal; orphans: 2;
+    text-align: -webkit-left; text-indent: 0px;
+     text-transform: none; white-space: normal;
+      word-spacing: 0px; -webkit-text-stroke-width: 0px;
+       text-decoration-style: initial; text-decoration-color: initial;
+        color: #000000; line-height: normal; widows: 1;">
+
+    <span style="font-size: 14pt; color: #000000; background-color: #ffff00;"><strong>Пятница</strong></span>
+</p>
+
+<br>
+<button id="id1">button</button>
+<script>
+    $('#id1').click(function () {
+        // $('span[style*="background-color: #ffff00;"]').css("background-color", "#FFFFFF");
+        $('[style*="background-color: #ffff00;"]').css("background-color", "#FFFFFF");
+    });
+</script>
+
 <h1>Hello world</h1>
 </body>
 </html>

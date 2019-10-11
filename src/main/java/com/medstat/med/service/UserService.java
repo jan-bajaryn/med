@@ -23,13 +23,9 @@ public class UserService implements UserDetailsService {
 
     public boolean addUser(@NonNull String username, @NonNull String password) {
         try {
-            User user = new User();
-            user.setActive(true);
-            user.setPassword(password);
-            user.setUsername(username);
-            userRepo.save(user);
+            userRepo.save(User.builder().active(true).password(password).username(username).build());
             return true;
-        }catch (Exception e){
+        } catch (Exception e) {
             return false;
         }
     }

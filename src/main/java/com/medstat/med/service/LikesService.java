@@ -16,10 +16,7 @@ public class LikesService {
     //note implemented
     public boolean addLike(User user, Note note) {
         try {
-            Mylike myLike = new Mylike();
-            myLike.setAuthor(user);
-            myLike.setNote(note);
-            myLikeRepo.save(myLike);
+            myLikeRepo.save(Mylike.builder().author(user).note(note).build());
             return true;
         } catch (Exception e) {
             return false;

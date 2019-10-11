@@ -1,9 +1,6 @@
 package com.medstat.med.domain;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.NaturalId;
 
 import javax.persistence.*;
@@ -11,8 +8,10 @@ import java.util.Set;
 
 @Entity
 @Data
-@NoArgsConstructor
 @RequiredArgsConstructor
+@Builder(toBuilder = true)
+@AllArgsConstructor
+@NoArgsConstructor
 public class Disease {
 
 

@@ -16,7 +16,7 @@ public class SymptomService {
 
     public boolean addSymptom(@NonNull String name){
         try{
-            symptomRepo.save(new Symptom(name));
+            symptomRepo.save(Symptom.builder().name(name).build());
             return true;
         }catch (Exception e){
             return false;

@@ -18,18 +18,17 @@ public class NoteService {
                            @NonNull String comment,
                            @NonNull Set<Drug> drugs,
                            @NonNull Set<Symptom> symptoms,
-                           @NonNull Set<Disease> diseases){
-        Note note = new Note();
-
-        note.setDrugs(drugs);
-        note.setAuthor(user);
-        note.setComment(comment);
-        note.setSymptoms(symptoms);
-        note.setDiseases(diseases);
-        try{
-            noteRepo.save(note);
+                           @NonNull Set<Disease> diseases) {
+        try {
+            noteRepo.save(Note.builder()
+                    .drugs(drugs)
+                    .author(user)
+                    .comment(comment)
+                    .symptoms(symptoms)
+                    .diseases(diseases)
+                    .build());
             return true;
-        }catch (Exception e){
+        } catch (Exception e) {
             return false;
         }
     }

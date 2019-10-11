@@ -14,12 +14,7 @@ public class CommentService {
 
     public boolean addComment(Note note, User author, String text) {
         try {
-            Comment comment = new Comment();
-            comment.setAuthor(author);
-            comment.setText(text);
-            comment.setNote(note);
-
-            commentRepo.save(comment);
+            commentRepo.save(Comment.builder().author(author).text(text).note(note).build());
             return true;
         } catch (Exception e) {
             return false;

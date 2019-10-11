@@ -14,7 +14,7 @@ public class DiseaseService {
 
     public boolean addDisease(@NonNull String name) {
         try {
-            diseaseRepo.save(new Disease(name));
+            diseaseRepo.save(Disease.builder().name(name).build());
             return true;
         } catch (Exception e) {
             return false;

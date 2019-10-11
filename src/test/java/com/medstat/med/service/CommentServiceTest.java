@@ -58,8 +58,7 @@ class CommentServiceTest {
         User user = userRepo.findByUsername(USERNAME_TEST);
 
         // add note
-        Note note = new Note();
-        note.setComment(NOTE_COMMENT_TEST);
+        Note note = Note.builder().comment(NOTE_COMMENT_TEST).build();
         noteRepo.save(note);
 
 

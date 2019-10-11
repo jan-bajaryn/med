@@ -40,27 +40,4 @@ class DiseaseServiceTest {
         assertTrue(b);
     }
 
-    /*
-    private static final String DRUG_TEST = "mydrug";
-
-    @Autowired
-    DrugService drugService;
-
-    @Autowired
-    DrugRepo drugRepo;
-
-    @BeforeEach
-    void setUp() {
-    }
-
-    @AfterEach
-    void tearDown() {
-        drugRepo.deleteByName(DRUG_TEST);
-    }
-
-    @Test
-    void addDrug() {
-        boolean b = drugService.addDrug(DRUG_TEST);
-        assertTrue(b);
-    }*/
 }

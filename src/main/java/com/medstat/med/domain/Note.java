@@ -8,7 +8,9 @@ import java.util.Set;
 @Entity
 @Getter
 @Setter
-@RequiredArgsConstructor
+@Builder(toBuilder = true)
+@AllArgsConstructor
+@NoArgsConstructor
 public class Note {
 
     @Id

@@ -10,6 +10,8 @@ import java.util.Set;
 @Getter
 @Setter
 @RequiredArgsConstructor
+@Builder(toBuilder = true)
+@AllArgsConstructor
 @NoArgsConstructor
 public class Drug {
 

@@ -57,7 +57,10 @@ class NoteServiceTest {
 
     @org.junit.jupiter.api.BeforeEach
     void setUp() {
-        USER = userRepo.save(new User(USERNAME_TEST, PASSWORD_TEST, ACTIVE_TEST));
+        USER = userRepo.save(User.builder().username(USERNAME_TEST)
+                .password(PASSWORD_TEST)
+                .active(ACTIVE_TEST)
+                .build());
         Drug drug = new Drug(DRUG_TEST);
         drugRepo.save(drug);
         DRUGS = new HashSet<>(Arrays.asList(drug));
@@ -93,13 +96,6 @@ class NoteServiceTest {
 
     @org.junit.jupiter.api.Test
     void addNote() {
-        Note note = new Note();
-
-        note.setAuthor(USER);
-        note.setDiseases(DISEASES);
-        note.setSymptoms(SYMPTOMS);
-        note.setDrugs(DRUGS);
-        note.setComment(COMMENT_TEST);
 
         boolean b = noteService.addNote(USER, COMMENT_TEST, DRUGS, SYMPTOMS, DISEASES);
         assertTrue(b);
