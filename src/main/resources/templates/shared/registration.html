@@ -35,9 +35,10 @@
 </form>
 
 <button id="btn">haha</button>
-<script>
+<script th:inline="javascript">
     $(document).ready(function () {
-        var mycsrf = $('#csrf').val().toString();
+
+        var mycsrf = [[${_csrf.token}]];
         alert(mycsrf);
 
         $('#submit').click(function () {
