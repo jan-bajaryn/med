@@ -1,6 +1,7 @@
 package com.medstat.med.service;
 
 
+import com.medstat.med.domain.Role;
 import com.medstat.med.domain.User;
 import com.medstat.med.repos.UserRepo;
 import lombok.NonNull;
@@ -9,6 +10,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+
+import java.util.Arrays;
+import java.util.HashSet;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -23,7 +27,12 @@ public class UserService implements UserDetailsService {
 
     public boolean addUser(@NonNull String username, @NonNull String password) {
         try {
-            userRepo.save(User.builder().active(true).password(password).username(username).build());
+            userRepo.save(User.builder()
+                    .active(true)
+                    .password(password)
+                    .username(username)
+                    .roles(new HashSet<>(Arrays.asList(Role.USER)))
+                    .build());
             return true;
         } catch (Exception e) {
             return false;

@@ -57,6 +57,20 @@ class NoteServiceTest {
 
     @org.junit.jupiter.api.BeforeEach
     void setUp() {
+
+    }
+
+    @org.junit.jupiter.api.AfterEach
+    void tearDown() {
+
+
+//        noteRepo.deleteByComment(COMMENT_TEST);
+    }
+
+    @org.junit.jupiter.api.Test
+    void addNote() {
+
+        //before
         USER = userRepo.save(User.builder().username(USERNAME_TEST)
                 .password(PASSWORD_TEST)
                 .active(ACTIVE_TEST)
@@ -74,11 +88,12 @@ class NoteServiceTest {
         Disease disease = new Disease(DISEASE_TEST);
         diseaseRepo.save(disease);
         DISEASES = new HashSet<>(Arrays.asList(disease));
-    }
+        // after before
 
-    @org.junit.jupiter.api.AfterEach
-    void tearDown() {
+        boolean b = noteService.addNote(USER, COMMENT_TEST, DRUGS, SYMPTOMS, DISEASES);
+        assertTrue(b);
 
+        //after
         //здесь могут быть проблемы
         Note note = noteRepo.findByComment(COMMENT_TEST).get(0);
         note.getDrugs().clear();
@@ -91,13 +106,6 @@ class NoteServiceTest {
         drugRepo.deleteByName(DRUG_TEST);
         symptomRepo.deleteByName(SYMPTOM_TEST);
         diseaseRepo.deleteByName(DISEASE_TEST);
-//        noteRepo.deleteByComment(COMMENT_TEST);
-    }
-
-    @org.junit.jupiter.api.Test
-    void addNote() {
-
-        boolean b = noteService.addNote(USER, COMMENT_TEST, DRUGS, SYMPTOMS, DISEASES);
-        assertTrue(b);
+        //after after
     }
 }

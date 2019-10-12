@@ -30,13 +30,15 @@ class DrugServiceTest {
 
     @AfterEach
     void tearDown() {
-        drugRepo.deleteByName(DRUG_TEST);
     }
 
     @Test
     void addDrug() {
         boolean b = drugService.addDrug(DRUG_TEST);
         assertTrue(b);
+
+        drugRepo.deleteByName(DRUG_TEST);
+
     }
 
 }

@@ -8,14 +8,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class MainController {
 
-    @GetMapping("ha")
-    public String ha(){
-        return "index";
-    }
-
     @GetMapping({"/","/index"})
     public String red(){
         return "shared/index";
     }
-
 }

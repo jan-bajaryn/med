@@ -31,13 +31,14 @@ class DiseaseServiceTest {
 
     @AfterEach
     void tearDown() {
-        diseaseRepo.deleteByName(DISEASE_TEST);
     }
 
     @Test
     void addDisease() {
         boolean b = diseaseService.addDisease(DISEASE_TEST);
         assertTrue(b);
+        diseaseRepo.deleteByName(DISEASE_TEST);
+
     }
 
 }

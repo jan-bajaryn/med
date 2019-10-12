@@ -23,23 +23,10 @@
 <div>
     <input id="submit" type="submit" value="Register" class="btn btn-primary"/>
 </div>
-
-<br>
-<br>
-<form method="post"
-      th:action="@{shared/haha}">
-    <input type="text" name="text">
-    <br>
-    <input type="submit" value="submit">
-    <input id="csrf" th:value="${_csrf.token}">
-</form>
-
-<button id="btn">haha</button>
 <script th:inline="javascript">
     $(document).ready(function () {
 
         var mycsrf = [[${_csrf.token}]];
-        alert(mycsrf);
 
         $('#submit').click(function () {
             $.post(window.location.origin.toString() + "/rest/registration", {
@@ -47,18 +34,14 @@
                 username: $('input[name="username"]').val().toString(),
                 password: $('input[name="password"]').val().toString()
             }, function (data, status) {
-                alert(data)
+                // alert(data);
+                if (data===true)
+                    window.open(window.location.origin.toString()+"/login", "_top");
+                else
+                    alert("User with so username already exists.");
             })
         });
 
-
-        $('#btn').click(function () {
-            $.post(window.location.origin.toString() + "/rest/my", {
-                _csrf: mycsrf
-            }, function (data) {
-                alert(data)
-            })
-        })
     });
 </script>
 

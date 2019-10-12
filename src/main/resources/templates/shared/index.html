@@ -7,5 +7,26 @@
 </head>
 <body>
 <h1>The main page</h1>
+<button id="logout">Logout</button>
+<br>
+<a href="/login">Login page</a>
+<br>
+<a href="/shared/search">search</a>
+<br>
+<a href="/profile_user">profile</a>
+<br>
+<a href="/add_note">Create a new note</a>
+
+<script th:inline="javascript">
+    $(document).ready(function () {
+        $('#logout').click(function () {
+            $.post(window.location.origin+"/logout",{
+                _csrf: [[${_csrf.token}]]
+            }, function (data, status) {
+                window.open(window.location.origin+"/login")
+            })
+        })
+    })
+</script>
 </body>
 </html>

@@ -1,4 +1,4 @@
-package com.medstat.med.service;
+package com.medstat.med.my;
 
 import com.medstat.med.domain.Role;
 import com.medstat.med.domain.User;
@@ -31,5 +31,14 @@ class MyTest {
                 .roles(new HashSet<>(Arrays.asList(Role.USER, Role.ADMIN)))
                 .build());
         assertNotNull(user);
+
+    }
+
+    @Test
+    void deleteUserMy(){
+        userRepo.deleteByUsername("test_username");
+        User user = userRepo.findByUsername("test_username");
+        assertNull(user);
+
     }
 }

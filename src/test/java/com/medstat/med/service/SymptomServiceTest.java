@@ -28,7 +28,6 @@ class SymptomServiceTest {
 
     @AfterEach
     void tearDown() {
-        symptomRepo.deleteByName(SYMPTOM_TEST);
     }
 
     @Test
@@ -36,6 +35,6 @@ class SymptomServiceTest {
 
         boolean b = symptomService.addSymptom(SYMPTOM_TEST);
         assertTrue(b);
-
+        symptomRepo.deleteByName(SYMPTOM_TEST);
     }
 }

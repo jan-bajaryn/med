@@ -16,7 +16,7 @@ public class SharedController {
 
     @GetMapping
     public String index() {
-        return "noteindex";
+        return "shared/index";
     }
 
     @GetMapping("clear")
