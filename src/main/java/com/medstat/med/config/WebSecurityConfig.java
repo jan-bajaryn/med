@@ -25,24 +25,24 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                    .authorizeRequests()
+                .authorizeRequests()
 //                разрешаем полный доступ для определенных страниц
-                    .antMatchers("/", "/index", "/registration", "/static", "/activate/*").permitAll()
-                    .anyRequest().authenticated()
+                .antMatchers("/", "/index", "/registration", "/static", "/shared/**","/rest/**").permitAll()
+                .anyRequest().authenticated()
                 .and()
-                    .formLogin()
-                    .loginPage("/login")
-                    .permitAll()
+                .formLogin()
+                .loginPage("/login")
+                .permitAll()
                 .and()
-                    .logout()
-                    .permitAll();
+                .logout()
+                .permitAll();
+//        http.csrf().disable();
     }
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-            web.ignoring().antMatchers("/static/**");
+        web.ignoring().antMatchers("/static/**");
     }
-
 
 
     @Override

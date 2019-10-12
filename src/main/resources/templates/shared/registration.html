@@ -1,11 +1,65 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Registration</title>
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 </head>
 <body>
-<h1>Still not implemented</h1>
+<header>
+    <h1>Registration: </h1>
+</header>
+
+<div class="form-group">
+    <label class="col-sm-2 col-form-label">User Name
+        <input class="form-control" type="text" name="username" placeholder="Enter your login"/>
+    </label>
+</div>
+<div class="form-group">
+    <label class="col-sm-2 col-form-label"> Password:
+        <input type="password" name="password" class="form-control" placeholder="Password"/>
+    </label>
+</div>
+<div>
+    <input id="submit" type="submit" value="Register" class="btn btn-primary"/>
+</div>
+
+<br>
+<br>
+<form method="post"
+      th:action="@{shared/haha}">
+    <input type="text" name="text">
+    <br>
+    <input type="submit" value="submit">
+    <input id="csrf" th:value="${_csrf.token}">
+</form>
+
+<button id="btn">haha</button>
+<script>
+    $(document).ready(function () {
+        var mycsrf = $('#csrf').val().toString();
+        alert(mycsrf);
+
+        $('#submit').click(function () {
+            $.post(window.location.origin.toString() + "/rest/registration", {
+                _csrf: mycsrf,
+                username: $('input[name="username"]').val().toString(),
+                password: $('input[name="password"]').val().toString()
+            }, function (data, status) {
+                alert(data)
+            })
+        });
+
+
+        $('#btn').click(function () {
+            $.post(window.location.origin.toString() + "/rest/my", {
+                _csrf: mycsrf
+            }, function (data) {
+                alert(data)
+            })
+        })
+    });
+</script>
 
 </body>
 </html>
