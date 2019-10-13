@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 class SymptomServiceTest {
 
-    public static final String SYMPTOM_TEST ="symptom1";
+    public static final String SYMPTOM_TEST ="symptom_test";
 
     @Autowired
     SymptomRepo symptomRepo;

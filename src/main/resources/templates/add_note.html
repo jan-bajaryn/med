@@ -49,13 +49,10 @@
 </div>
 
 <button>send request</button>
-<script>
+<script th:inline="javascript">
     $(document).ready(function () {
 
 
-        // $('input:text').on("keyup", function () {
-        //     $('.hid').hide();
-        // });
         $('body').on("keyup", 'input:text', function () {
             $('.hid').hide();
         });
@@ -101,13 +98,47 @@
 
         $('button:last').click(function () {
             var myarr = ["haha", "hihi", "huhu"];
-            var myvar = JSON.stringify(myarr)
+            var myvar = JSON.stringify(myarr);
             // alert(myvar);
             $.get(window.location.origin + "/rest/test", {
                 myname: myvar
             }, function (data) {
                 alert(data);
             })
+        });
+
+        $('input:submit').click(function () {
+            var arrDrug = [];
+
+            $('[name=drug]').each(function () {
+                if ($(this).val() !== "")
+                    arrDrug.push($(this).val());
+            });
+            var arrDis = [];
+
+            $('[name=disease]').each(function () {
+                if ($(this).val() !== "")
+                    arrDis.push($(this).val());
+            });
+            var arrSymp = [];
+
+            $('[name=symptom]').each(function () {
+                if ($(this).val() !== "")
+                    arrSymp.push($(this).val());
+            });
+
+            var mycsrf = [[${_csrf.token}]];
+            $.post(window.location.origin + "/rest/add_note", {
+                drugs_json: JSON.stringify(arrDrug),
+                diseases_json: JSON.stringify(arrDis),
+                symptoms_json: JSON.stringify(arrSymp),
+                _csrf: [[${_csrf.token}]],
+                comment: $('[name=comment]').val()
+            }, function (data) {
+                alert(data)
+            })
+
+
         })
     })
 </script>

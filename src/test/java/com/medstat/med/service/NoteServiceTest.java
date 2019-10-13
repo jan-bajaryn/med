@@ -17,13 +17,13 @@ import static org.junit.jupiter.api.Assertions.*;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 class NoteServiceTest {
-    private static final String USERNAME_TEST = "username1";
-    private static final String PASSWORD_TEST = "password1";
+    private static final String USERNAME_TEST = "username_for_my_test_very_important";
+    private static final String PASSWORD_TEST = "password_for_my_test_very_important";
     private static final boolean ACTIVE_TEST = true;
 
-    private static final String DRUG_TEST = "drug1";
-    private static final String SYMPTOM_TEST = "symptom1";
-    private static final String DISEASE_TEST = "disease1";
+    private static final String DRUG_TEST = "drug_for_my_test_very_important";
+    private static final String SYMPTOM_TEST = "symptom_for_my_test_very_important";
+    private static final String DISEASE_TEST = "disease_for_my_test_very_important";
 
     @Autowired
     UserService userService;

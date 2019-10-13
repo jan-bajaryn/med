@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 class DiseaseServiceTest {
 
-    public static final String DISEASE_TEST = "disease1";
+    public static final String DISEASE_TEST = "disease_test";
 
     @Autowired
     DiseaseService diseaseService;
