@@ -1,13 +1,8 @@
 package com.medstat.med.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.medstat.med.domain.Disease;
-import com.medstat.med.domain.Drug;
-import com.medstat.med.domain.Symptom;
-import com.medstat.med.domain.User;
-import com.medstat.med.repos.DiseaseRepo;
-import com.medstat.med.repos.DrugRepo;
-import com.medstat.med.repos.SymptomRepo;
+import com.medstat.med.domain.*;
+import com.medstat.med.repos.*;
 import com.medstat.med.service.*;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
@@ -23,6 +18,17 @@ import java.util.stream.Collectors;
 @RequestMapping("/rest")
 @Slf4j
 public class MyRestController {
+
+    @Autowired
+    UserRepo userRepo;
+
+    @Autowired
+    NoteRepo noteRepo;
+
+    @Autowired
+    CommentRepo commentRepo;
+    @Autowired
+    CommentService commentService;
 
     @Autowired
     UserService userService;
@@ -130,6 +136,34 @@ public class MyRestController {
 
 
         return noteService.addNote(user, name, comment, drugs_set, symptoms_set, diseases_set);
+    }
+
+    @PostMapping("/add_comment")
+    public boolean add_comment(@AuthenticationPrincipal User user,
+                               @RequestParam(name = "text") String text,
+                               @RequestParam(name = "id") Long id) {
+
+        Note note;
+        Optional<Note> byId = noteRepo.findById(id);
+        if (byId.isPresent())
+            note = byId.get();
+        else
+            throw new IllegalArgumentException("there are no note with so id.");
+
+        User userToAdd;
+        Optional<User> byIdUser;
+        try{
+            byIdUser = userRepo.findById(user.getId());
+        }catch (NullPointerException e){
+            return false;
+        }
+        if(byIdUser.isPresent())
+            userToAdd = byIdUser.get();
+        else
+            throw new IllegalArgumentException("there no so user");
+
+
+        return commentService.addComment(note, userToAdd,text);
     }
 
 
