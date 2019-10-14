@@ -24,6 +24,7 @@ class CommentServiceTest {
     private static final String USER_PASSWORD_TEST = "password1";
     private static final String NOTE_COMMENT_TEST = "this is my comment";
     private static final String COMMENT_TEXT_TEST = "this is very bad post.";
+    public static final String NOTE_NAME_TEST = "my_name_test";
 
     @Autowired
     NoteService noteService;
@@ -58,7 +59,8 @@ class CommentServiceTest {
         User user = userRepo.findByUsername(USERNAME_TEST);
 
         // add note
-        Note note = Note.builder().comment(NOTE_COMMENT_TEST).build();
+        Note note = Note.builder().comment(NOTE_COMMENT_TEST)
+                .name(NOTE_NAME_TEST).build();
         noteRepo.save(note);
 
 

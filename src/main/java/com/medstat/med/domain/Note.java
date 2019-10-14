@@ -17,7 +17,8 @@ public class Note {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-//    private String name;
+    @NonNull
+    private String name;
 
     @ManyToMany(fetch = FetchType.EAGER/*, cascade = CascadeType.ALL*/)
     @JoinTable(

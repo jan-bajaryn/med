@@ -15,6 +15,7 @@ public class NoteService {
     NoteRepo noteRepo;
 
     public boolean addNote(@NonNull User user,
+                           @NonNull String name,
                            @NonNull String comment,
                            @NonNull Set<Drug> drugs,
                            @NonNull Set<Symptom> symptoms,
@@ -26,6 +27,7 @@ public class NoteService {
                     .comment(comment)
                     .symptoms(symptoms)
                     .diseases(diseases)
+                    .name(name)
                     .build());
             return true;
         } catch (Exception e) {

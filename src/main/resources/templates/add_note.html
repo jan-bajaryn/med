@@ -7,6 +7,12 @@
 </head>
 <body>
 <div>
+<!--    check for empty-->
+    <label>Name:
+        <input type="text" name="name" placeholder="name">
+    </label>
+</div>
+<div>
     <label>Drugs:
         <input type="text" name="drug" placeholder="drug">
         <button id="add_drug">Add</button>
@@ -133,7 +139,8 @@
                 diseases_json: JSON.stringify(arrDis),
                 symptoms_json: JSON.stringify(arrSymp),
                 _csrf: [[${_csrf.token}]],
-                comment: $('[name=comment]').val()
+                comment: $('[name=comment]').val(),
+                name:$('[name=name]').val()
             }, function (data) {
                 alert(data)
             })

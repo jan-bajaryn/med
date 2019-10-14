@@ -9,10 +9,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -24,6 +23,7 @@ class NoteServiceTest {
     private static final String DRUG_TEST = "drug_for_my_test_very_important";
     private static final String SYMPTOM_TEST = "symptom_for_my_test_very_important";
     private static final String DISEASE_TEST = "disease_for_my_test_very_important";
+    public static final String NOTE_NAME_TEST = "note_name_test_my";
 
     @Autowired
     UserService userService;
@@ -90,7 +90,7 @@ class NoteServiceTest {
         DISEASES = new HashSet<>(Arrays.asList(disease));
         // after before
 
-        boolean b = noteService.addNote(USER, COMMENT_TEST, DRUGS, SYMPTOMS, DISEASES);
+        boolean b = noteService.addNote(USER, NOTE_NAME_TEST, COMMENT_TEST, DRUGS, SYMPTOMS, DISEASES);
         assertTrue(b);
 
         //after

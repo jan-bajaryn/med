@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>User Edit</title>
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+
+</head>
+<body>
+
+<h2 th:text="${userToSend.getId()}"></h2>
+<h2 th:text="${userToSend.getUsername()}"></h2>
+<form th:method="post" th:action="@{/admin_control/save}">
+    <label>
+        <input type="text" th:value="${userToSend.getUsername()}" name="username">
+    </label>
+    <input type="hidden" th:value="${userToSend.getId()}" name="userId">
+    <br>
+    <div th:each="role : ${roles}">
+        <label>
+            <span th:text="${role}"></span>
+            <input type="checkbox" th:name="${role}">
+        </label>
+    </div>
+    <br>
+    <input type="submit" value="Submit" name="submit">
+</form>
+
+<script th:inline="javascript">
+    // $(document).ready(function () {
+        // var roles = [[${userToSend.roles}]];
+        // allert(roles)
+        // alert("ready")
+    // });
+</script>
+</body>
+</html>

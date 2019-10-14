@@ -7,7 +7,28 @@
 </head>
 <body>
 
-
+<div>
+    <h1 th:text="${note.name}"></h1>
+    <div>
+        Symptoms:
+        <ol>
+            <li th:each="smp : ${note.symptoms}" th:text="${smp.name}"></li>
+        </ol>
+    </div>
+    <div>
+        Drugs:
+        <ol>
+            <li th:each="drg : ${note.drugs}" th:text="${drg.name}"></li>
+        </ol>
+    </div>
+    <div>
+        Symptoms:
+        <ol>
+            <li th:each="dis : ${note.diseases}" th:text="${dis.name}"></li>
+        </ol>
+    </div>
+    <div th:text="${note.comment}"></div>
+</div>
 
 </body>
 </html>

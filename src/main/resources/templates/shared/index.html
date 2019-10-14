@@ -22,8 +22,8 @@
         $('#logout').click(function () {
             $.post(window.location.origin+"/logout",{
                 _csrf: [[${_csrf.token}]]
-            }, function (data, status) {
-                window.open(window.location.origin+"/login")
+            }, function (data) {
+                window.open(window.location.origin+"/login", "_top")
             })
         })
     })

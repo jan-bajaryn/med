@@ -8,9 +8,11 @@
 <body>
 
 <h2>Your notes: </h2>
-<ol>
-    <th:block th:each="el : ${notes}">
-        <li th:text="${el.id}"></li>
+<ol >
+    <th:block th:if="${notes!=null}">
+    <li th:each="el : ${notes}">
+        <a th:href="@{/shared/note_page/{id}(id=${el.id})}" th:text="${el.name}">default</a>
+    </li>
     </th:block>
 </ol>
 </body>

@@ -9,6 +9,7 @@ import com.medstat.med.repos.DiseaseRepo;
 import com.medstat.med.repos.DrugRepo;
 import com.medstat.med.repos.SymptomRepo;
 import com.medstat.med.service.*;
+import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -98,6 +99,7 @@ public class MyRestController {
                             @RequestParam(name = "diseases_json") String diseases_json,
                             @RequestParam(name = "symptoms_json") String symptoms_json,
                             @RequestParam(name = "comment") String comment,
+                            @NonNull @RequestParam(name = "name") String name,
                             @AuthenticationPrincipal User user) throws IOException {
 
         List<String> drugs = new ArrayList<>();
@@ -127,7 +129,7 @@ public class MyRestController {
                 .collect(Collectors.toSet());
 
 
-        return noteService.addNote(user, comment, drugs_set, symptoms_set, diseases_set);
+        return noteService.addNote(user, name, comment, drugs_set, symptoms_set, diseases_set);
     }
 
 

@@ -6,7 +6,16 @@
     <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 </head>
 <body>
-<h1>Still not implemented</h1>
+<h1>Search page</h1>
+
+<h3>Notes: </h3>
+
+<ol>
+    <li th:each="el : ${notes}">
+        <span th:text="${el.name} + '('+${el.author.username}+')'+ '  '"></span>
+        <a th:href="@{/shared/note_page/{id}(id=${el.id})}"> link to this note </a>
+    </li>
+</ol>
 
 </body>
 </html>

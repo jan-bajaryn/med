@@ -41,4 +41,11 @@ class MyTest {
         assertNull(user);
 
     }
+
+    @Test
+    void unique_user(){
+        User user = userRepo.save(User.builder().username("haha").password("haha").active(true).build());
+        assertNotNull(user);
+    }
+
 }

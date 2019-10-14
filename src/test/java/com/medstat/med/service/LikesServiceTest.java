@@ -23,6 +23,7 @@ class LikesServiceTest {
     public static final String USER_TEST = "myusername";
     public static final String PASSWORD_TEST = "mypassword";
     public static final String NOTE_TEST = "my comment is here";
+    public static final String NOTE_NAME_TEST = "my_name_test_hahaha";
     @Autowired
     LikesService likesService;
     @Autowired
@@ -51,8 +52,7 @@ class LikesServiceTest {
         User user = userRepo.findByUsername(USER_TEST);
 
         //доработать здесь обязательно
-        Note note = new Note();
-        note.setComment(NOTE_TEST);
+        Note note = Note.builder().comment(NOTE_TEST).name(NOTE_NAME_TEST).build();
         noteRepo.save(note);
 
         boolean b = likesService.addLike(user, note);
