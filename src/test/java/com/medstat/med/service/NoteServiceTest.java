@@ -5,6 +5,7 @@ import com.medstat.med.repos.*;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Arrays;
@@ -47,6 +48,9 @@ class NoteServiceTest {
     @Autowired
     UserRepo userRepo;
 
+    @Autowired
+    PasswordEncoder passwordEncoder;
+
 
     private static Set<Drug> DRUGS;
     private static Set<Symptom> SYMPTOMS;
@@ -72,7 +76,7 @@ class NoteServiceTest {
 
         //before
         USER = userRepo.save(User.builder().username(USERNAME_TEST)
-                .password(PASSWORD_TEST)
+                .password(passwordEncoder.encode(PASSWORD_TEST))
                 .active(ACTIVE_TEST)
                 .build());
         Drug drug = new Drug(DRUG_TEST);

@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Arrays;
@@ -19,6 +20,8 @@ import static org.junit.jupiter.api.Assertions.*;
 class MyTest {
 
     @Autowired
+    PasswordEncoder passwordEncoder;
+    @Autowired
     UserRepo userRepo;
 
 
@@ -26,7 +29,7 @@ class MyTest {
     void myTest() {
         User user = userRepo.save(User.builder()
                 .username("a")
-                .password("a")
+                .password(passwordEncoder.encode("a"))
                 .active(true)
                 .roles(new HashSet<>(Arrays.asList(Role.USER, Role.ADMIN)))
                 .build());
@@ -44,7 +47,7 @@ class MyTest {
 
     @Test
     void unique_user(){
-        User user = userRepo.save(User.builder().username("haha").password("haha").active(true).build());
+        User user = userRepo.save(User.builder().username("haha").password(passwordEncoder.encode("haha")).active(true).build());
         assertNotNull(user);
     }
 
