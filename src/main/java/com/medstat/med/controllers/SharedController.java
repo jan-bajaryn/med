@@ -16,42 +16,28 @@ import java.util.Optional;
 @RequestMapping("/shared")
 public class SharedController {
 
+    private final NoteRepo noteRepo;
+
     @Autowired
-    NoteRepo noteRepo;
+    public SharedController(NoteRepo noteRepo) {
+        this.noteRepo = noteRepo;
+    }
 
     @GetMapping
     public String index() {
         return "shared/index";
     }
 
-    @GetMapping("clear")
-    public String clear() {
-
-        return "noteindex";
-    }
-
-
-    @PostMapping("/haha")
-    public String something(@RequestParam(name = "text", required = false) String text){
-        return "shared/note_page";
-    }
-
-//    @GetMapping("/login")
-//    public String login(){
-//        return "login";
-//    }
-
-
     @GetMapping("note_page/{id}")
-    public String note_page(@PathVariable Long  id,
+    public String note_page(@PathVariable Long id,
                             Model model) {
-        Optional<Note> byId = noteRepo.findById(id.longValue());
+        Optional<Note> byId = noteRepo.findById(id);
         byId.ifPresent(note -> model.addAttribute("note", note));
         return "shared/note_page";
     }
 
     @GetMapping("/search")
-    public String search(Model model){
+    public String search(Model model) {
         model.addAttribute("notes", noteRepo.findAll());
         return "shared/search";
     }

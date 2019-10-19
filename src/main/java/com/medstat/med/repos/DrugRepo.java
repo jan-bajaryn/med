@@ -8,4 +8,6 @@ import javax.transaction.Transactional;
 public interface DrugRepo extends JpaRepository<Drug, Long> {
     @Transactional
     void deleteByName(String name);
+
+    Drug findByName(String name);
 }

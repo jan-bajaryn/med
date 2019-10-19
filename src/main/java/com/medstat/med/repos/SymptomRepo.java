@@ -10,4 +10,5 @@ public interface SymptomRepo extends JpaRepository<Symptom, Long> {
     @Transactional
     void deleteByName(String name);
 
+    Symptom findByName(String symptom);
 }

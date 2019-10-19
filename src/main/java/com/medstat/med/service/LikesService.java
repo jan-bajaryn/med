@@ -10,8 +10,12 @@ import org.springframework.stereotype.Service;
 @Service
 public class LikesService {
 
+    private final MyLikeRepo myLikeRepo;
+
     @Autowired
-    MyLikeRepo myLikeRepo;
+    public LikesService(MyLikeRepo myLikeRepo) {
+        this.myLikeRepo = myLikeRepo;
+    }
 
     //note implemented
     public boolean addLike(User user, Note note) {

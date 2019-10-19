@@ -11,8 +11,12 @@ import org.springframework.stereotype.Service;
 @Service
 public class SymptomService {
 
+    private final SymptomRepo symptomRepo;
+
     @Autowired
-    SymptomRepo symptomRepo;
+    public SymptomService(SymptomRepo symptomRepo) {
+        this.symptomRepo = symptomRepo;
+    }
 
     public boolean addSymptom(@NonNull String name){
         try{

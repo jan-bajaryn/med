@@ -9,8 +9,12 @@ import org.springframework.stereotype.Service;
 @Service
 public class DiseaseService {
 
+    private final DiseaseRepo diseaseRepo;
+
     @Autowired
-    DiseaseRepo diseaseRepo;
+    public DiseaseService(DiseaseRepo diseaseRepo) {
+        this.diseaseRepo = diseaseRepo;
+    }
 
     public boolean addDisease(@NonNull String name) {
         try {
