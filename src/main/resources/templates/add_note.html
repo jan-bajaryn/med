@@ -56,10 +56,7 @@
 </div>
 <div>
     <input type="submit" value="submit">
-    <input type="reset" value="reset">
 </div>
-
-<button>send request</button>
 <script th:inline="javascript">
     $(document).ready(function () {
 
@@ -147,7 +144,9 @@
                 comment: $('[name=comment]').val(),
                 name:$('[name=name]').val()
             }, function (data) {
-                alert(data)
+                if (data){
+                    window.open(window.location.origin+"/profile_user", "_top")
+                }
             })
 
 
