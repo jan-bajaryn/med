@@ -32,7 +32,10 @@ public class LikesService {
     public boolean addLike(User user, Note note) {
         try {
             MylikeKey mylikeKey = new MylikeKey(user.getId(),note.getId());
-            myLikeRepo.save(Mylike.builder().mylikeKey(mylikeKey).build());
+            myLikeRepo.save(Mylike.builder().mylikeKey(mylikeKey)
+                    .author(user)
+                    .note(note)
+                    .build());
             return true;
         } catch (Exception e) {
             return false;
