@@ -72,7 +72,11 @@ public class MyRestController {
     @GetMapping("is_like_exists")
     public boolean is_like_exists(@AuthenticationPrincipal User user,
                                   @RequestParam(name = "note_id") Long note_id) {
-        return likesService.isLikeExists(user, note_id);
+        try {
+            return likesService.isLikeExists(user, note_id);
+        } catch (Exception e) {
+            return false;
+        }
     }
 
 

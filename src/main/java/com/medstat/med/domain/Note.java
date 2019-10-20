@@ -3,6 +3,8 @@ package com.medstat.med.domain;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -52,7 +54,7 @@ public class Note {
     private Set<Mylike> Mylikes;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "note")
-    private Set<Comment> comments;
+    private List<Comment> comments;
 
 
     private String comment;

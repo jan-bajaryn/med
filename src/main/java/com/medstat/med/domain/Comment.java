@@ -3,6 +3,7 @@ package com.medstat.med.domain;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.Comparator;
 
 @Entity
 @Data

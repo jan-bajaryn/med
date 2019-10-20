@@ -1,5 +1,6 @@
 package com.medstat.med.controllers;
 
+import com.medstat.med.domain.Comment;
 import com.medstat.med.domain.Note;
 import com.medstat.med.repos.NoteRepo;
 import lombok.extern.slf4j.Slf4j;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Comparator;
 import java.util.Optional;
 
 
@@ -32,7 +34,11 @@ public class SharedController {
     public String note_page(@PathVariable Long id,
                             Model model) {
         Optional<Note> byId = noteRepo.findById(id);
-        byId.ifPresent(note -> model.addAttribute("note", note));
+        if (byId.isPresent()){
+            Note note = byId.get();
+            note.getComments().sort(Comparator.comparing(Comment::getId));
+            model.addAttribute("note",note);
+        }
         return "shared/note_page";
     }
 
