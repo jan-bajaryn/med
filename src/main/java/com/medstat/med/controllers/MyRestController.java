@@ -3,16 +3,15 @@ package com.medstat.med.controllers;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.medstat.med.domain.User;
 import com.medstat.med.service.CommentService;
+import com.medstat.med.service.LikesService;
 import com.medstat.med.service.NoteService;
 import com.medstat.med.service.UserService;
+import lombok.Getter;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 
@@ -24,16 +23,18 @@ public class MyRestController {
     private final CommentService commentService;
     private final UserService userService;
     private final NoteService noteService;
+    private final LikesService likesService;
 
     final ObjectMapper mapper = new ObjectMapper();
 
     @Autowired
     public MyRestController(CommentService commentService,
                             UserService userService,
-                            NoteService noteService) {
+                            NoteService noteService, LikesService likesService) {
         this.commentService = commentService;
         this.userService = userService;
         this.noteService = noteService;
+        this.likesService = likesService;
     }
 
     @PostMapping("/registration")
@@ -59,7 +60,19 @@ public class MyRestController {
                                @RequestParam(name = "text") String text,
                                @RequestParam(name = "id") Long id) {
 
-        return commentService.addCommentToNote(user,text,id);
+        return commentService.addCommentToNote(user, text, id);
+    }
+
+    @PostMapping("add_like")
+    public int add_like(@AuthenticationPrincipal User user,
+                        @RequestParam(name = "id") Long id) {
+        return likesService.addUserLike(user, id);
+    }
+
+    @GetMapping("is_like_exists")
+    public boolean is_like_exists(@AuthenticationPrincipal User user,
+                                  @RequestParam(name = "note_id") Long note_id) {
+        return likesService.isLikeExists(user, note_id);
     }
 
 

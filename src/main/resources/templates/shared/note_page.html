@@ -4,39 +4,88 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    <style>
+        #like {
+            text-align: right;
+        }
+    </style>
 </head>
 <body>
 
 <div>
-    <h1 th:text="${note.name}"></h1>
-    <div>
-        Symptoms:
-        <ol>
-            <li th:each="smp : ${note.symptoms}" th:text="${smp.name}"></li>
-        </ol>
-    </div>
-    <div>
-        Drugs:
-        <ol>
-            <li th:each="drg : ${note.drugs}" th:text="${drg.name}"></li>
-        </ol>
-    </div>
-    <div>
-        Symptoms:
-        <ol>
-            <li th:each="dis : ${note.diseases}" th:text="${dis.name}"></li>
-        </ol>
-    </div>
-    <div th:text="${note.comment}"></div>
-    <div th:if="${note.comments!=null}">
-        Comments:
-        <div th:each="com : ${note.comments}">
-            <p th:text="${com.author.username+': '}"></p>
-            <p th:text="${com.text}"></p>
-        </div>
-    </div>
+    <table>
+        <tr>
+            <th>
+                <h1 th:text="${note.name}"></h1>
+            </th>
+        </tr>
+        <tr>
+            <td>
+                <div>
+                    Symptoms:
+                    <ol>
+                        <li th:each="smp : ${note.symptoms}" th:text="${smp.name}"></li>
+                    </ol>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+
+                <div>
+                    Drugs:
+                    <ol>
+                        <li th:each="drg : ${note.drugs}" th:text="${drg.name}"></li>
+                    </ol>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div>
+                    Diseases:
+                    <ol>
+                        <li th:each="dis : ${note.diseases}" th:text="${dis.name}"></li>
+                    </ol>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div th:text="${note.comment}"></div>
+            </td>
+        </tr>
+        <tr th:if="${note.comments!=null}">
+            <td>
+                <div>
+                    Comments:
+                    <ol>
+                        <li th:each="com : ${note.comments}">
+                            <p th:text="${com.author.username+': '}"></p>
+                            <p th:text="${com.text}"></p>
+                        </li>
+                    </ol>
+                </div>
+            </td>
+        </tr>
+
+    </table>
+
 </div>
-<button id="add_comment">add comment</button>
+<table>
+    <tr>
+        <td>
+            <button id="add_comment">add comment</button>
+        </td>
+        <td>
+            <button id="like">Likes</button>
+            <span th:text="${note.getMylikes()==null ? 0 : note.getMylikes().size()}"></span>
+            <br>
+            <span style="display: none; color: red">you like this note</span>
+        </td>
+    </tr>
+</table>
+
 <div id="comment_body" style="display: none">
     <label>Comment:
         <input type="text" name="text" placeholder="comment">
@@ -50,25 +99,48 @@
         var pathArray = window.location.pathname.split("/");
         var pathVariable = pathArray[pathArray.length - 1];
 
+        var isLikeExistsRetVal;
+
+        function isLikeExitst(callback) {
+            $.get(window.location.origin + "/rest/is_like_exists", {
+                note_id: pathVariable
+            }, function (data) {
+                isLikeExistsRetVal = data;
+                // alert(retVal);
+                callback();
+            });
+        }
+
+        isLikeExitst(function () {
+            // alert(isLikeExistsRetVal)
+            if (isLikeExistsRetVal) {
+                $('#like').siblings().filter('span').last().show();
+            }
+        });
+
+        function toggleExists() {
+
+        }
+
         $('#add_comment').click(function () {
             $('#comment_body').show();
             $(this).hide();
         });
 
         $('#send_comment').click(function () {
-                    if ($('[name=text]').first().val() !== "") {
+                if ($('[name=text]').first().val() !== "") {
 
-                        $.post(window.location.origin + "/rest/add_comment", {
-                            text: $('[name=text]').first().val(),
-                            _csrf: [[${_csrf.token}]],
-                            id: pathVariable
-                        }, function (data, status) {
-                            if (data)
-                                document.location.reload();
-                            else
-                                alert("You are not logged in");
-                        })
-                    }
+                    $.post(window.location.origin + "/rest/add_comment", {
+                        text: $('[name=text]').first().val(),
+                        _csrf: [[${_csrf.token}]],
+                        id: pathVariable
+                    }, function (data, status) {
+                        if (data)
+                            document.location.reload();
+                        else
+                            alert("You are not logged in");
+                    })
+                }
             }
         );
 
@@ -77,7 +149,26 @@
                 $("#send_comment").click();
             }
         });
+
+
+        $('#like').click(function () {
+            $.post(window.location.origin + "/rest/add_like", {
+                _csrf: [[${_csrf.token}]],
+                id: pathVariable
+            }, function (data) {
+                $('#like').siblings().filter('span').first().text(data);
+                isLikeExitst(function () {
+                    if (isLikeExistsRetVal) {
+                        $('#like').siblings().filter('span').last().show();
+                    } else
+                        $('#like').siblings().filter('span').last().hide();
+                })
+            })
+        });
+
     });
+
+
 </script>
 
 </body>

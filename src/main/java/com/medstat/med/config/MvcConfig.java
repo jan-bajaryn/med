@@ -12,7 +12,7 @@ public class MvcConfig implements WebMvcConfigurer {
 
 
     @Bean
-    public ObjectMapper getMapper(){
+    public ObjectMapper getMapper() {
         return new ObjectMapper();
     }
 
@@ -20,6 +20,8 @@ public class MvcConfig implements WebMvcConfigurer {
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/static/**")
                 .addResourceLocations("classpath:/static/");
+        registry.addResourceHandler("/downloads/")
+                .addResourceLocations("classpath:/downloads/");
     }
 
     public void addViewControllers(ViewControllerRegistry registry) {
