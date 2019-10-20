@@ -1,10 +1,12 @@
 package com.medstat.med.service;
 
 
+import com.medstat.med.domain.Note;
 import com.medstat.med.domain.Role;
 import com.medstat.med.domain.User;
 import com.medstat.med.repos.UserRepo;
 import lombok.NonNull;
+import org.aspectj.weaver.ast.Not;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -12,9 +14,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -47,9 +47,11 @@ public class UserService implements UserDetailsService {
 
     public String getProfileUser(User user, Model model) {
         Optional<User> byId = userRepo.findById(user.getId());
-        if (byId.isPresent())
-            model.addAttribute("notes", byId.get().getNotes());
-        else
+        if (byId.isPresent()) {
+            ArrayList<Note> notes = new ArrayList<>(byId.get().getNotes());
+            notes.sort(Comparator.comparing(Note::getId));
+            model.addAttribute("notes", notes);
+        } else
             throw new IllegalArgumentException("There are not note with so id");
         return "profile_user";
     }
