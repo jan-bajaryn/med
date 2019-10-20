@@ -1,37 +1,48 @@
 package com.medstat.med.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.medstat.med.domain.keys.MylikeKey;
+import lombok.*;
 import lombok.experimental.Tolerate;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 
 @Entity
 @Table(name = "mylike")
 @Builder(toBuilder = true)
 @AllArgsConstructor
-@NoArgsConstructor
 @Data
-public class Mylike {
+public class Mylike  {
+    public Mylike() {
+    }
+    //    @Id
+//    @GeneratedValue(strategy = GenerationType.AUTO)
+//    private Long id;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    @EmbeddedId
+    public MylikeKey mylikeKey;
+
+    @ManyToOne
+//    @JoinColumn(name = "user_id")
+    @MapsId("author_id")
+    public User author;
+
+    @ManyToOne
+//    @JoinColumn(name = "note_id")
+    @MapsId("note_id")
+    public Note note;
 
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id")
-    private User author;
+//    public User author;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "note_id")
-    private Note note;
+
+//    public Note note;
 
 //    @Tolerate
 //    public Mylike() {
 //    }
+
+
 }
 

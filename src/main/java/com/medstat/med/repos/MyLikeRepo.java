@@ -9,7 +9,7 @@ import java.util.stream.DoubleStream;
 public interface MyLikeRepo extends JpaRepository<Mylike, Long> {
     Mylike findByAuthor_Id(Long id);
 
-    Mylike findByAuthor_IdAndAndNote_Id(Long authorId, Long noteId);
+    Mylike findByAuthor_IdAndNote_Id(Long authorId, Long noteId);
 
     int countAllByNote_Id(Long id);
 }
