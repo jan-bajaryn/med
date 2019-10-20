@@ -4,9 +4,12 @@
     <meta charset="UTF-8">
     <title>User Edit</title>
     <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
-
+    <th:block th:replace="~{fragments/header :: headFragment}">
+    </th:block>
 </head>
 <body>
+
+<th:block th:replace="~{fragments/header :: navPanel}"></th:block>
 
 <h2 th:text="${userToSend.getId()}"></h2>
 <h2 th:text="${userToSend.getUsername()}"></h2>
@@ -33,5 +36,9 @@
         // alert("ready")
     // });
 </script>
+
+<div th:replace="~{fragments/header :: bodyNested}"></div>
+
+
 </body>
 </html>

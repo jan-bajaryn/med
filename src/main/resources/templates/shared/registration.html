@@ -4,8 +4,13 @@
     <meta charset="UTF-8">
     <title>Registration</title>
     <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    <th:block th:replace="~{fragments/header :: headFragment}">
+    </th:block>
 </head>
 <body>
+
+<th:block th:replace="~{fragments/header :: navPanel}"></th:block>
+
 <header>
     <h1>Registration: </h1>
 </header>
@@ -44,6 +49,9 @@
 
     });
 </script>
+
+<div th:replace="~{fragments/header :: bodyNested}"></div>
+
 
 </body>
 </html>

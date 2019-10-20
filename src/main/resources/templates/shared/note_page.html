@@ -9,8 +9,12 @@
             text-align: right;
         }
     </style>
+    <th:block th:replace="~{fragments/header :: headFragment}">
+    </th:block>
 </head>
 <body>
+
+<th:block th:replace="~{fragments/header :: navPanel}"></th:block>
 
 <div>
     <table>
@@ -170,6 +174,8 @@
 
 
 </script>
+
+<div th:replace="~{fragments/header :: bodyNested}"></div>
 
 </body>
 </html>

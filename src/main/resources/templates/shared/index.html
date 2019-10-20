@@ -4,8 +4,11 @@
     <meta charset="UTF-8">
     <title>shrmed</title>
     <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    <th:block th:replace="~{fragments/header :: headFragment}">
+    </th:block>
 </head>
 <body>
+<th:block th:replace="~{fragments/header :: navPanel}"></th:block>
 <h1>The main page</h1>
 <button id="logout">Logout</button>
 <br>
@@ -28,5 +31,7 @@
         })
     })
 </script>
+
+<div th:replace="~{fragments/header :: bodyNested}"></div>
 </body>
 </html>

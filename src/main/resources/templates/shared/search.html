@@ -4,8 +4,12 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    <th:block th:replace="~{fragments/header :: headFragment}">
+    </th:block>
 </head>
 <body>
+<th:block th:replace="~{fragments/header :: navPanel}"></th:block>
+
 <h1>Search page</h1>
 
 <h3>Notes: </h3>
@@ -16,6 +20,9 @@
         <a th:href="@{/shared/note_page/{id}(id=${el.id})}"> link to this note </a>
     </li>
 </ol>
+
+<div th:replace="~{fragments/header :: bodyNested}"></div>
+
 
 </body>
 </html>

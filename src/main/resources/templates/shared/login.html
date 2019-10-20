@@ -4,9 +4,11 @@
     <meta charset="UTF-8">
     <title>Spring Security Example </title>
     <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    <th:block th:replace="~{fragments/header :: headFragment}">
+    </th:block>
 </head>
 <body>
-
+<th:block th:replace="~{fragments/header :: navPanel}"></th:block>
 
 <form th:action="@{/login}" method="post">
     <div class="form-group">
@@ -23,5 +25,9 @@
         <input type="submit" value="Sign In" class="btn btn-primary"/>
     </div>
 </form>
+
+
+<div th:replace="~{fragments/header :: bodyNested}"></div>
+
 </body>
 </html>

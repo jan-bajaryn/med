@@ -4,8 +4,12 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    <th:block th:replace="~{fragments/header :: headFragment}">
+    </th:block>
 </head>
 <body>
+
+<th:block th:replace="~{fragments/header :: navPanel}"></th:block>
 
 <h2>Your notes: </h2>
 <ol >
@@ -15,5 +19,9 @@
     </li>
     </th:block>
 </ol>
+
+
+<div th:replace="~{fragments/header :: bodyNested}"></div>
+
 </body>
 </html>
