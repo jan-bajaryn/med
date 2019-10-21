@@ -23,7 +23,7 @@ class MyTest {
 
 
     @Test
-    void myTest() {
+    void addFirstAdmin() {
         User user = userRepo.save(User.builder()
                 .username("a")
                 .password("a")
