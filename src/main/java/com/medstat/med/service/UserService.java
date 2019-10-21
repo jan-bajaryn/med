@@ -4,9 +4,9 @@ package com.medstat.med.service;
 import com.medstat.med.domain.Note;
 import com.medstat.med.domain.Role;
 import com.medstat.med.domain.User;
+import com.medstat.med.repos.NoteRepo;
 import com.medstat.med.repos.UserRepo;
 import lombok.NonNull;
-import org.aspectj.weaver.ast.Not;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -20,10 +20,12 @@ import java.util.*;
 public class UserService implements UserDetailsService {
 
     private final UserRepo userRepo;
+    private final NoteRepo noteRepo;
 
     @Autowired
-    public UserService(UserRepo userRepo) {
+    public UserService(UserRepo userRepo, NoteRepo noteRepo) {
         this.userRepo = userRepo;
+        this.noteRepo = noteRepo;
     }
 
     @Override
@@ -55,4 +57,36 @@ public class UserService implements UserDetailsService {
             throw new IllegalArgumentException("There are not note with so id");
         return "profile_user";
     }
+
+    public boolean delete_note_admin(User user, Long path) {
+        try {
+            noteRepo.deleteById(path);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public boolean delete_note_editor(User user, Long path) {
+        Optional<Note> byId = noteRepo.findById(path);
+        if (byId.isPresent()) {
+            Note note = byId.get();
+
+            if (note.getAuthor() != null && note.getAuthor().getRoles().contains(Role.USER) &&
+                    !note.getAuthor().getRoles().contains(Role.ADMIN) &&
+                    !note.getAuthor().getRoles().contains(Role.EDITOR)) {
+                try{
+                    noteRepo.deleteById(path);
+                    return true;
+                }catch (Exception e){
+                    return false;
+                }
+            }
+
+
+        }
+
+        return false;
+    }
+
 }

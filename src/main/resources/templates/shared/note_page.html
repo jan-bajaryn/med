@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -15,6 +15,9 @@
 <body>
 
 <th:block th:replace="~{fragments/header :: navPanel}"></th:block>
+
+<button id="delete" style="display: none">Delete</button>
+
 
 <div>
     <table>
@@ -169,6 +172,36 @@
                 })
             })
         });
+
+        var role = [[${role}]];
+
+        if (role === "admin") {
+            $('#delete').show();
+            $('#delete').click(function () {
+                $.post(window.location.origin + "/rest/delete_note_admin", {
+                    _csrf: [[${_csrf.token}]],
+                    path: pathVariable
+                }, function (data) {
+                    if (data)
+                        window.open(window.location.origin, "_top");
+                    else
+                        alert("you have no permission to delete this note")
+                })
+            });
+        } else if (role === "editor") {
+            $('#delete').show();
+            $('#delete').click(function () {
+                $.post(window.location.origin + "/rest/delete_note_editor", {
+                    _csrf: [[${_csrf.token}]],
+                    path: pathVariable
+                }, function (data) {
+                    if (data)
+                        window.open(window.location.origin, "_top");
+                    else
+                        alert("you have no permission to delete this note")
+                })
+            });
+        }
 
     });
 

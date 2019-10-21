@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>User Edit</title>
@@ -13,6 +13,7 @@
 
 <h2 th:text="${userToSend.getId()}"></h2>
 <h2 th:text="${userToSend.getUsername()}"></h2>
+<th:block sec:authorize="hasAuthority('ADMIN')">
 <form th:method="post" th:action="@{/admin_control/save}">
     <label>
         <input type="text" th:value="${userToSend.getUsername()}" name="username">
@@ -28,6 +29,24 @@
     <br>
     <input type="submit" value="Submit" name="submit">
 </form>
+</th:block>
+<th:block sec:authorize="hasAuthority('EDITOR')">
+    <form th:method="post" th:action="@{/edit_control/save}">
+        <label>
+            <input type="text" th:value="${userToSend.getUsername()}" name="username">
+        </label>
+        <input type="hidden" th:value="${userToSend.getId()}" name="userId">
+        <br>
+        <div th:each="role : ${roles}">
+            <label>
+                <span th:text="${role}"></span>
+                <input type="checkbox" th:name="${role}">
+            </label>
+        </div>
+        <br>
+        <input type="submit" value="Submit" name="submit">
+    </form>
+</th:block>
 
 <script th:inline="javascript">
     // $(document).ready(function () {

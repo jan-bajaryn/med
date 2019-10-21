@@ -51,11 +51,21 @@ public class MainController {
     }
 
     @GetMapping("/editor_control")
+    @PreAuthorize("hasAuthority('EDITOR')")
     public String editor_control(@AuthenticationPrincipal User user,
                                  Model model) throws IllegalAccessException {
         return editorService.toEditorControl(user, model);
     }
 
+    @GetMapping("/editor_control/{id}")
+    @PreAuthorize("hasAuthority('EDITOR')")
+    public String editor_edit(@AuthenticationPrincipal User user,
+                              Model model,
+                              @PathVariable(name = "id") Long id) throws IllegalAccessException {
+        return editorService.editor_control_spec_user(model,user,id);
+    }
+
+    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("/admin_control/{id}")
     public String admin_edit(Model model,
                              @AuthenticationPrincipal User user,
@@ -71,5 +81,16 @@ public class MainController {
                            @RequestParam Map<String, String> form) {
         return adminService.modificate_spec_user(username, userId, form);
     }
+
+    @PostMapping("/edit_control/save")
+    @PreAuthorize("hasAuthority('EDITOR')")
+    public String editUserByEditor(@NonNull @RequestParam(name = "username") String username,
+                                   @RequestParam(name = "userId") Long userId,
+                                   @RequestParam Map<String, String> form) {
+        return editorService.modificate_spec_user(username, userId, form);
+    }
+
+
+
 
 }

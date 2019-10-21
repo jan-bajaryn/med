@@ -27,7 +27,7 @@
     <tr th:each="el : ${users}">
         <td><span th:text="${el.getUsername()}">Username there</span></td>
         <td th:each="role : ${el.getRoles()}"><span th:text="${role}">Role there</span></td>
-        <td><a th:href="'/user/'+${el.getId()}">edit</a></td>
+        <td><a th:href="@{/editor_control/{id}(id=${el.getId()})}">edit</a></td>
     </tr>
     </tbody>
 </table>

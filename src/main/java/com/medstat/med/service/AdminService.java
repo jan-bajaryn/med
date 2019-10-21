@@ -35,7 +35,7 @@ public class AdminService {
 
         Optional<User> byIdToEdit = userRepo.findById(id);
 
-        if (byIdEditor.isPresent() && byIdToEdit.isPresent() && byIdEditor.get().getRoles().contains(Role.ADMIN)) {
+        if (byIdEditor.isPresent() && byIdToEdit.isPresent()) {
             model.addAttribute("userToSend", byIdToEdit.get());
             model.addAttribute("roles", new ArrayList<Role>(Arrays.asList(Role.USER, Role.ADMIN, Role.EDITOR)));
         } else

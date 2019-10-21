@@ -10,6 +10,7 @@ import lombok.Getter;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -78,6 +79,22 @@ public class MyRestController {
             return false;
         }
     }
+
+    @PostMapping("/delete_note_admin")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public boolean delete_note_admin(@AuthenticationPrincipal User user,
+                                     @RequestParam(name = "path") Long path) {
+        return userService.delete_note_admin(user, path);
+    }
+
+    @PostMapping("/delete_note_editor")
+    @PreAuthorize("hasAuthority('EDITOR')")
+    public boolean delete_note_editor(@AuthenticationPrincipal User user,
+                                     @RequestParam(name = "path") Long path) {
+        return userService.delete_note_editor(user, path);
+    }
+
+
 
 
 }
