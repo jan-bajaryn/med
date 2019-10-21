@@ -50,10 +50,10 @@ public class Note {
     @JoinColumn(name = "user_id")
     private User author;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "note")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "note", cascade = CascadeType.ALL)
     private Set<Mylike> Mylikes;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "note")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "note", cascade = CascadeType.ALL)
     private List<Comment> comments;
 
 
