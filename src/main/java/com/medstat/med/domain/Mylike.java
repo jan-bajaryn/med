@@ -3,9 +3,11 @@ package com.medstat.med.domain;
 import com.medstat.med.domain.keys.MylikeKey;
 import lombok.*;
 import lombok.experimental.Tolerate;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 
 @Entity
@@ -33,6 +35,8 @@ public class Mylike {
     @MapsId("note_id")
     public Note note;
 
+//    @CreationTimestamp
+//    private LocalDateTime createDateTime;
 
 }
 

@@ -1,0 +1,1 @@
+alter table mylike drop column if exists create_date_time;
