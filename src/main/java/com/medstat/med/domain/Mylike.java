@@ -13,7 +13,7 @@ import java.io.Serializable;
 @Builder(toBuilder = true)
 @AllArgsConstructor
 @Data
-public class Mylike  {
+public class Mylike {
     public Mylike() {
     }
     //    @Id
@@ -32,8 +32,6 @@ public class Mylike  {
     @JoinColumn(name = "note_id")
     @MapsId("note_id")
     public Note note;
-
-
 
 
 }

@@ -51,7 +51,7 @@ public class Note {
     private User author;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "note", cascade = CascadeType.ALL)
-    private Set<Mylike> Mylikes;
+    private Set<Mylike> mylikes;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "note", cascade = CascadeType.ALL)
     private List<Comment> comments;

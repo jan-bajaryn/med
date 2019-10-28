@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.Optional;
 
 @Service
@@ -31,7 +32,7 @@ public class LikesService {
     //note implemented
     public boolean addLike(User user, Note note) {
         try {
-            MylikeKey mylikeKey = new MylikeKey(user.getId(),note.getId());
+            MylikeKey mylikeKey = new MylikeKey(user.getId(), note.getId());
             myLikeRepo.save(Mylike.builder().mylikeKey(mylikeKey)
                     .author(user)
                     .note(note)
@@ -47,19 +48,29 @@ public class LikesService {
         Optional<Note> byIdNote = noteRepo.findById(id);
 
         Mylike mylike_test = myLikeRepo.findByAuthor_IdAndNote_Id(user.getId(), id);
+        Note note = byIdNote.get();
         if (byIdUser.isPresent() && byIdNote.isPresent() && mylike_test == null) {
-            MylikeKey mylikeKey = new MylikeKey(byIdUser.get().getId(),byIdNote.get().getId());
+            MylikeKey mylikeKey = new MylikeKey(byIdUser.get().getId(), note.getId());
             Mylike mylike = Mylike.builder().mylikeKey(mylikeKey)
                     .author(byIdUser.get())
-                    .note(byIdNote.get())
+                    .note(note)
                     .build();
             myLikeRepo.save(mylike);
             log.info("mylike have been huccessfully saved");
         } else if (mylike_test != null) {
-            myLikeRepo.delete(mylike_test);
+
+            delete_like(mylike_test, note);
+
         }
 
         return myLikeRepo.countAllByNote_Id(id);
+    }
+
+    @Transactional
+    public void delete_like(Mylike mylike_test, Note note) {
+        note.getMylikes().remove(mylike_test);
+        noteRepo.save(note);
+        myLikeRepo.delete(mylike_test);
     }
 
     public boolean isLikeExists(User user, Long note_id) {
