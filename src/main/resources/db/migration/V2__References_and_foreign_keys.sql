@@ -1,0 +1,15 @@
+alter table if exists disease add constraint UK_b8ftqc5jx5mqq7gp28fc1qrjb unique (name);
+alter table if exists drug add constraint UK_ermp8odj6k1cfxr7f18v0getd unique (name);
+alter table if exists symptom add constraint UK_csw590upec4bmymj0s7e031gv unique (name);
+alter table if exists comment add constraint FKgcgdcgly6u49hf4g8y2di3g4p foreign key (user_id) references usr;
+alter table if exists comment add constraint FK41heeawfghvw9jccau0d1tjox foreign key (note_id) references note;
+alter table if exists mylike add constraint FKdwspsdssrrkm4pw6hlfat9xi2 foreign key (user_id) references usr;
+alter table if exists mylike add constraint FKl8xtb81o5an1q5xeb7fv3j401 foreign key (note_id) references note;
+alter table if exists note add constraint FKgq77x35wnx2x13llb4w8q9yg4 foreign key (user_id) references usr;
+alter table if exists note_disease add constraint FK140d8ho3t284rqi8w1lk5iehp foreign key (disease_id) references disease;
+alter table if exists note_disease add constraint FKiv4cfkwcq8nakcx9yjuqosp9n foreign key (note_id) references note;
+alter table if exists note_drug add constraint FKmlfylmpqfnykgpg0ikwh2emdp foreign key (drug_id) references drug;
+alter table if exists note_drug add constraint FKfnim3o6xsw0dgmycoc7ec5yrr foreign key (note_id) references note;
+alter table if exists note_symptom add constraint FK9wu46i265uxymus2dkrgecmy2 foreign key (symptom_id) references symptom;
+alter table if exists note_symptom add constraint FKappklg1bpwbsdcgjbq5oom6t foreign key (note_id) references note;
+alter table if exists user_role add constraint FKfpm8swft53ulq2hl11yplpr5 foreign key (user_id) references usr;
