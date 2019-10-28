@@ -47,6 +47,13 @@
     </div>
 </div>
 
+
+<div class="custom-file">
+    <label class="custom-file-label">
+        <input id="file" type="file" name="file">
+    </label>
+</div>
+
 <div>
     <label>
             <textarea style="width: 200px; height: 200px"
@@ -136,18 +143,52 @@
             });
 
             var mycsrf = [[${_csrf.token}]];
-            $.post(window.location.origin + "/rest/add_note", {
-                drugs_json: JSON.stringify(arrDrug),
-                diseases_json: JSON.stringify(arrDis),
-                symptoms_json: JSON.stringify(arrSymp),
-                _csrf: [[${_csrf.token}]],
-                comment: $('[name=comment]').val(),
-                name:$('[name=name]').val()
-            }, function (data) {
-                if (data){
-                    window.open(window.location.origin+"/profile_user", "_top")
+            //new code
+
+            var data = new FormData();
+
+            data.append('file', $('#file')[0].files[0]);
+            data.append( 'drugs_json', JSON.stringify(arrDrug));
+            data.append( 'diseases_json', JSON.stringify(arrDis));
+            data.append( 'symptoms_json', JSON.stringify(arrSymp));
+            data.append( '_csrf', [[${_csrf.token}]]);
+            data.append( 'comment', $('[name=comment]').val());
+            data.append( 'name', $('[name=name]').val());
+
+            $.ajax({
+                type: "POST",
+                enctype: 'multipart/form-data',
+                url: window.location.origin + "/rest/add_note",
+                data: data,
+                processData: false,
+                contentType: false,
+                cache: false,
+                timeout: 600000,
+                success: function (data) {
+                    if (data){
+                        window.open(window.location.origin+"/profile_user", "_top")
+                    }
                 }
-            })
+            });
+
+            //new code
+
+
+
+
+            // $.post(window.location.origin + "/rest/add_note", {
+            //     drugs_json: JSON.stringify(arrDrug),
+            //     diseases_json: JSON.stringify(arrDis),
+            //     symptoms_json: JSON.stringify(arrSymp),
+            //     _csrf: [[${_csrf.token}]],
+            //     comment: $('[name=comment]').val(),
+            //     name:$('[name=name]').val(),
+            //     file:$('input[type=file]')[0].files[0]
+            // }, function (data) {
+            //     if (data){
+            //         window.open(window.location.origin+"/profile_user", "_top")
+            //     }
+            // })
 
 
         })

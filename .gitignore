@@ -29,4 +29,7 @@ build/
 
 ### VS Code ###
 .vscode/
+
+
 bash_scripts/
+uploads/

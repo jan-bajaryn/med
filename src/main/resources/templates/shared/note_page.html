@@ -62,6 +62,12 @@
                 <div th:text="${note.comment}"></div>
             </td>
         </tr>
+        <tr th:if="${note.image!=null}">
+            <td>
+                    Image:
+                <img alt="image" th:src="@{${'/downloads/'+note.image}}">
+            </td>
+        </tr>
         <tr th:if="${note.comments!=null}">
             <td>
                 <div>
@@ -75,7 +81,6 @@
                 </div>
             </td>
         </tr>
-
     </table>
 
 </div>

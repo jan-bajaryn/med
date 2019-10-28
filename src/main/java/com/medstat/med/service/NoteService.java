@@ -9,17 +9,25 @@ import com.medstat.med.repos.SymptomRepo;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
 @Slf4j
 public class NoteService {
+
+
+    @Value("${upload.path}")
+    private String uploadPath;
 
     private final NoteRepo noteRepo;
     private final ObjectMapper mapper;
@@ -41,7 +49,8 @@ public class NoteService {
                            @NonNull String comment,
                            @NonNull Set<Drug> drugs,
                            @NonNull Set<Symptom> symptoms,
-                           @NonNull Set<Disease> diseases) {
+                           @NonNull Set<Disease> diseases,
+                           String image) {
         try {
             noteRepo.save(Note.builder()
                     .drugs(drugs)
@@ -50,6 +59,8 @@ public class NoteService {
                     .symptoms(symptoms)
                     .diseases(diseases)
                     .name(name)
+                    //check if there will be problem with null
+                    .image(image)
                     .build());
             return true;
         } catch (Exception e) {
@@ -62,7 +73,12 @@ public class NoteService {
                                   String diseases_json,
                                   String symptoms_json,
                                   String comment,
-                                  String name) throws IOException {
+                                  String name,
+                                  MultipartFile file) throws IOException {
+
+        log.info("file = {}",file);
+
+        String image = null;
 
         List<String> drugs = new ArrayList<>();
         List<String> diseases = new ArrayList<>();
@@ -99,8 +115,23 @@ public class NoteService {
                 .peek(symptomRepo::save)
                 .collect(Collectors.toSet());
 
+        if (file != null && !file.getOriginalFilename().isEmpty()) {
 
-        return addNote(user, name, comment, drugs_set, symptoms_set, diseases_set);
+            File updoadDir = new File(uploadPath);
+
+            if (!updoadDir.exists()) {
+                updoadDir.mkdir();
+            }
+
+            String uuidFile = UUID.randomUUID().toString();
+            String resultFileName = uuidFile + "." + file.getOriginalFilename();
+
+            file.transferTo(new File(uploadPath + File.separator + resultFileName));
+            image = resultFileName;
+        }
+
+
+        return addNote(user, name, comment, drugs_set, symptoms_set, diseases_set,image);
 
     }
 }

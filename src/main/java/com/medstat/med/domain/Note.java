@@ -59,4 +59,6 @@ public class Note {
 
     private String comment;
 
+    private String image;
+
 }

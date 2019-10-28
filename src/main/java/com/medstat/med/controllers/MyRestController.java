@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 
@@ -51,9 +52,10 @@ public class MyRestController {
                             @RequestParam(name = "symptoms_json") String symptoms_json,
                             @RequestParam(name = "comment") String comment,
                             @NonNull @RequestParam(name = "name") String name,
-                            @AuthenticationPrincipal User user) throws IOException {
+                            @AuthenticationPrincipal User user,
+                            @RequestParam(name = "file", required = false) MultipartFile file) throws IOException {
 
-        return noteService.addNoteCascade(user, drugs_json, diseases_json, symptoms_json, comment, name);
+        return noteService.addNoteCascade(user, drugs_json, diseases_json, symptoms_json, comment, name, file);
     }
 
     @PostMapping("/add_comment")

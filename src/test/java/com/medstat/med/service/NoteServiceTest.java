@@ -90,7 +90,7 @@ class NoteServiceTest {
         DISEASES = new HashSet<>(Arrays.asList(disease));
         // after before
 
-        boolean b = noteService.addNote(USER, NOTE_NAME_TEST, COMMENT_TEST, DRUGS, SYMPTOMS, DISEASES);
+        boolean b = noteService.addNote(USER, NOTE_NAME_TEST, COMMENT_TEST, DRUGS, SYMPTOMS, DISEASES, null);
         assertTrue(b);
 
         //after
