@@ -12,12 +12,21 @@
 
 <h1>Search page</h1>
 
+<form th:action="@{/shared/filter}"
+        method="get">
+    <label>Enter diseases to filter:
+        <input type="text" name="filter">
+    </label>
+        <input type="submit" value="Search">
+</form>
+
 <h3>Notes: </h3>
 
-<ol>
+<ol th:if="${notes!=null}">
     <li th:each="el : ${notes}">
         <span th:text="${el.name} + '('+${el.author.username}+')'+ '  '"></span>
         <a th:href="@{/shared/note_page/{id}(id=${el.id})}"> link to this note </a>
+        <div th:each="dis : ${el.diseases}" th:text="${dis.name}"></div>
     </li>
 </ol>
 
