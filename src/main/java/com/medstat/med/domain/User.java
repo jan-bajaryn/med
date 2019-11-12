@@ -26,7 +26,7 @@ public class User implements UserDetails {
 
     @NonNull
 //    @NaturalId
-//    @Column(unique = true)
+    @Column(unique = true)
     private String username;
 
     @NonNull
