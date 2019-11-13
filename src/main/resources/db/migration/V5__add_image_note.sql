@@ -1,1 +1,0 @@
-alter table note add column image text;

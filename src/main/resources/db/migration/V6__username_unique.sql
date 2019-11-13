@@ -1,1 +1,0 @@
-ALTER TABLE usr ADD CONSTRAINT unique_username UNIQUE (username);

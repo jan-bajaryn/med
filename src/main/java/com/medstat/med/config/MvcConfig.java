@@ -43,4 +43,6 @@ public class MvcConfig implements WebMvcConfigurer {
         registry.addViewController("/admin_control").setViewName("admin_control");
     }
 
+
+
 }
