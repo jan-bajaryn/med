@@ -14,14 +14,17 @@ public class Note {
 
     @Id
     private String id;
-
+    @NonNull
     private String authorId;
+    @NonNull
     private String name;
     private Set<Drug> drugs;
     private Set<Symptom> symptoms;
     private Set<Disease> diseases;
     private Set<Mylike> mylikes;
     private List<Comment> comments;
+
+    @NonNull
     private String comment;
     private String image;
 

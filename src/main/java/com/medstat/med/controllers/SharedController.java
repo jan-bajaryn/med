@@ -48,9 +48,16 @@ public class SharedController {
             if (note.getComments() == null) {
                 note.setComments(new ArrayList<>());
             } else {
+                log.info("comment={}",note.getComments());
+                note.setComments(note.getComments().stream().filter(Objects::nonNull).collect(Collectors.toList()));
                 note.getComments().sort(Comparator.comparing(Comment::getId));
             }
+
+            Map<Comment, String> collect = note.getComments().stream()
+                    .collect(Collectors.toMap(e -> e, e -> userRepo.findById(e.getAuthorId()).get().getUsername()));
             model.addAttribute("note", note);
+            model.addAttribute("comments", collect.entrySet());
+
             //working with user
             if (user != null) {
                 Optional<User> byIdUser = userRepo.findById(user.getId());

@@ -25,13 +25,12 @@ class MyTest {
     @Test
     void addFirstAdmin() {
         User user = userRepo.save(User.builder()
-                .username("a")
-                .password("a")
+                .username("aa")
+                .password("aa")
                 .active(true)
                 .roles(new HashSet<>(Arrays.asList(Role.USER, Role.ADMIN)))
                 .build());
         assertNotNull(user);
-
     }
 
     @Test

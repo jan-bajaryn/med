@@ -7,7 +7,7 @@ import lombok.*;
 @Setter
 @RequiredArgsConstructor
 @Builder(toBuilder = true)
-@AllArgsConstructor
 public class Drug {
+    @NonNull
     private String name;
 }
