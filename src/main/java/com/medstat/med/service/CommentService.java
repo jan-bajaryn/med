@@ -8,6 +8,7 @@ import com.medstat.med.repos.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
@@ -24,7 +25,9 @@ public class CommentService {
 
     public boolean addComment(Note note, User author, String text) {
         try {
-            note.getComments().add(Comment.builder().authorId(author.getId()).text(text).build());
+            note.getComments().add(Comment.builder().authorId(author.getId())
+                    .createdDate(LocalDateTime.now())
+                    .text(text).build());
             noteRepo.save(note);
             return true;
         } catch (Exception e) {

@@ -48,9 +48,9 @@ public class SharedController {
             if (note.getComments() == null) {
                 note.setComments(new ArrayList<>());
             } else {
-                log.info("comment={}",note.getComments());
+                log.info("comment={}", note.getComments());
                 note.setComments(note.getComments().stream().filter(Objects::nonNull).collect(Collectors.toList()));
-                note.getComments().sort(Comparator.comparing(Comment::getId));
+                note.getComments().sort(Comparator.comparing(Comment::getCreatedDate));
             }
 
             Map<Comment, String> collect = note.getComments().stream()

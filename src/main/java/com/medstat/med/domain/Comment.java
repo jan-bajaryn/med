@@ -1,8 +1,11 @@
 package com.medstat.med.domain;
 
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.time.LocalDateTime;
 
 @Data
 @Builder(toBuilder = true)
@@ -10,9 +13,9 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @NoArgsConstructor
 @Document
 public class Comment {
-    @Id
-    @com.mongodb.lang.NonNull
-    private String id;
+
+    @CreatedDate
+    private LocalDateTime createdDate;
 
     @NonNull
     private String authorId;
