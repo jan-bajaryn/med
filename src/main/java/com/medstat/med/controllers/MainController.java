@@ -61,15 +61,15 @@ public class MainController {
     @PreAuthorize("hasAuthority('EDITOR')")
     public String editor_edit(@AuthenticationPrincipal User user,
                               Model model,
-                              @PathVariable(name = "id") Long id) throws IllegalAccessException {
-        return editorService.editor_control_spec_user(model,user,id);
+                              @PathVariable(name = "id") String id) throws IllegalAccessException {
+        return editorService.editor_control_spec_user(model, user, id);
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("/admin_control/{id}")
     public String admin_edit(Model model,
                              @AuthenticationPrincipal User user,
-                             @PathVariable(name = "id") Long id) {
+                             @PathVariable(name = "id") String id) {
 
         return adminService.admin_control_spec_user(model, user, id);
     }
@@ -77,7 +77,7 @@ public class MainController {
     @PostMapping("/admin_control/save")
     @PreAuthorize("hasAuthority('ADMIN')")
     public String editUser(@NonNull @RequestParam(name = "username") String username,
-                           @RequestParam(name = "userId") Long userId,
+                           @RequestParam(name = "userId") String userId,
                            @RequestParam Map<String, String> form) {
         return adminService.modificate_spec_user(username, userId, form);
     }
@@ -85,12 +85,10 @@ public class MainController {
     @PostMapping("/edit_control/save")
     @PreAuthorize("hasAuthority('EDITOR')")
     public String editUserByEditor(@NonNull @RequestParam(name = "username") String username,
-                                   @RequestParam(name = "userId") Long userId,
+                                   @RequestParam(name = "userId") String userId,
                                    @RequestParam Map<String, String> form) {
         return editorService.modificate_spec_user(username, userId, form);
     }
-
-
 
 
 }

@@ -2,7 +2,6 @@ package com.medstat.med.service;
 
 import com.medstat.med.domain.Note;
 import com.medstat.med.domain.User;
-import com.medstat.med.repos.CommentRepo;
 import com.medstat.med.repos.NoteRepo;
 import com.medstat.med.repos.UserRepo;
 import org.junit.jupiter.api.AfterEach;
@@ -40,8 +39,8 @@ class CommentServiceTest {
 
     @Autowired
     CommentService commentService;
-    @Autowired
-    CommentRepo commentRepo;
+//    @Autowired
+//    CommentRepo commentRepo;
 
     @BeforeEach
     void setUp() {
@@ -71,7 +70,7 @@ class CommentServiceTest {
 
         //delete comment
 
-        commentRepo.deleteByAuthor_Id(user.getId());
+//        commentRepo.deleteByAuthor_Id(user.getId());
 
         //delete user
         userRepo.deleteByUsername(USERNAME_TEST);

@@ -27,23 +27,23 @@ class NoteServiceTest {
 
     @Autowired
     UserService userService;
-    @Autowired
-    DiseaseService diseaseService;
-    @Autowired
-    DrugService drugService;
+//    @Autowired
+//    DiseaseService diseaseService;
+//    @Autowired
+//    DrugService drugService;
     @Autowired
     NoteService noteService;
-    @Autowired
-    SymptomService symptomService;
+//    @Autowired
+//    SymptomService symptomService;
 
-    @Autowired
-    DiseaseRepo diseaseRepo;
-    @Autowired
-    DrugRepo drugRepo;
-    @Autowired
-    NoteRepo noteRepo;
-    @Autowired
-    SymptomRepo symptomRepo;
+//    @Autowired
+//    DiseaseRepo diseaseRepo;
+//    @Autowired
+//    DrugRepo drugRepo;
+//    @Autowired
+//    NoteRepo noteRepo;
+//    @Autowired
+//    SymptomRepo symptomRepo;
     @Autowired
     UserRepo userRepo;
 
@@ -67,8 +67,8 @@ class NoteServiceTest {
 //        noteRepo.deleteByComment(COMMENT_TEST);
     }
 
-    @org.junit.jupiter.api.Test
-    void addNote() {
+//    @org.junit.jupiter.api.Test
+    /*void addNote() {
 
         //before
         USER = userRepo.save(User.builder().username(USERNAME_TEST)
@@ -107,5 +107,5 @@ class NoteServiceTest {
         symptomRepo.deleteByName(SYMPTOM_TEST);
         diseaseRepo.deleteByName(DISEASE_TEST);
         //after after
-    }
+    }*/
 }

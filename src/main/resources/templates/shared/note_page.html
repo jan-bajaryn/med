@@ -74,7 +74,7 @@
                     Comments:
                     <ol>
                         <li th:each="com : ${note.comments}">
-                            <p th:text="${com.author.username+': '}"></p>
+                            <p th:text="${com.getAuthorId.username+': '}"></p>
                             <p th:text="${com.text}"></p>
                         </li>
                     </ol>

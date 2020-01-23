@@ -50,7 +50,10 @@ public class UserService implements UserDetailsService {
     public String getProfileUser(User user, Model model) {
         Optional<User> byId = userRepo.findById(user.getId());
         if (byId.isPresent()) {
-            ArrayList<Note> notes = new ArrayList<>(byId.get().getNotes());
+
+            User presentUser = byId.get();
+            List<Note> allByAuthorId = noteRepo.findAllByAuthorId(presentUser.getId());
+            ArrayList<Note> notes = new ArrayList<>(allByAuthorId);
             notes.sort(Comparator.comparing(Note::getId));
             model.addAttribute("notes", notes);
         } else
@@ -58,28 +61,33 @@ public class UserService implements UserDetailsService {
         return "profile_user";
     }
 
-    public boolean delete_note_admin(User user, Long path) {
+    public boolean deleteNoteAdmin(User user, String noteId) {
         try {
-            noteRepo.deleteById(path);
+            noteRepo.deleteById(noteId);
             return true;
         } catch (Exception e) {
             return false;
         }
     }
 
-    public boolean delete_note_editor(User user, Long path) {
-        Optional<Note> byId = noteRepo.findById(path);
+    public boolean deleteNoteEditor(User user, String noteId) {
+        Optional<Note> byId = noteRepo.findById(noteId);
         if (byId.isPresent()) {
             Note note = byId.get();
 
-            if (note.getAuthor() != null && note.getAuthor().getRoles().contains(Role.USER) &&
-                    !note.getAuthor().getRoles().contains(Role.ADMIN) &&
-                    !note.getAuthor().getRoles().contains(Role.EDITOR)) {
-                try{
-                    noteRepo.deleteById(path);
-                    return true;
-                }catch (Exception e){
-                    return false;
+            String authorId = note.getAuthorId();
+            Optional<User> byIdUser = userRepo.findById(authorId);
+            if (byIdUser.isPresent()) {
+                User presentUser = byIdUser.get();
+                if (presentUser.getRoles().contains(Role.USER) &&
+                        !presentUser.getRoles().contains(Role.ADMIN) &&
+                        !presentUser.getRoles().contains(Role.EDITOR)) {
+                    try {
+                        noteRepo.deleteById(noteId);
+                        return true;
+                    } catch (Exception e) {
+                        return false;
+                    }
                 }
             }
 

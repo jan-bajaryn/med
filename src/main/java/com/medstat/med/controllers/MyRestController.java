@@ -6,7 +6,6 @@ import com.medstat.med.service.CommentService;
 import com.medstat.med.service.LikesService;
 import com.medstat.med.service.NoteService;
 import com.medstat.med.service.UserService;
-import lombok.Getter;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,20 +60,20 @@ public class MyRestController {
     @PostMapping("/add_comment")
     public boolean add_comment(@AuthenticationPrincipal User user,
                                @RequestParam(name = "text") String text,
-                               @RequestParam(name = "id") Long id) {
+                               @RequestParam(name = "id") String id) {
 
         return commentService.addCommentToNote(user, text, id);
     }
 
     @PostMapping("add_like")
     public int add_like(@AuthenticationPrincipal User user,
-                        @RequestParam(name = "id") Long id) {
+                        @RequestParam(name = "id") String id) {
         return likesService.addUserLike(user, id);
     }
 
     @GetMapping("is_like_exists")
     public boolean is_like_exists(@AuthenticationPrincipal User user,
-                                  @RequestParam(name = "note_id") Long note_id) {
+                                  @RequestParam(name = "note_id") String  note_id) {
         try {
             return likesService.isLikeExists(user, note_id);
         } catch (Exception e) {
@@ -85,18 +84,16 @@ public class MyRestController {
     @PostMapping("/delete_note_admin")
     @PreAuthorize("hasAuthority('ADMIN')")
     public boolean delete_note_admin(@AuthenticationPrincipal User user,
-                                     @RequestParam(name = "path") Long path) {
-        return userService.delete_note_admin(user, path);
+                                     @RequestParam(name = "path") String  noteId) {
+        return userService.deleteNoteAdmin(user, noteId);
     }
 
     @PostMapping("/delete_note_editor")
     @PreAuthorize("hasAuthority('EDITOR')")
     public boolean delete_note_editor(@AuthenticationPrincipal User user,
-                                     @RequestParam(name = "path") Long path) {
-        return userService.delete_note_editor(user, path);
+                                      @RequestParam(name = "path") String noteId) {
+        return userService.deleteNoteEditor(user, noteId);
     }
-
-
 
 
 }

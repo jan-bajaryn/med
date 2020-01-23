@@ -1,14 +1,12 @@
 package com.medstat.med.repos;
 
 import com.medstat.med.domain.User;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 
-public interface UserRepo extends JpaRepository<User, Long> {
+public interface UserRepo extends CrudRepository<User, String> {
     User findByUsername(String username);
-
-    //    void deleteByUsername(String username);
 
     @Transactional
     void deleteByUsername(String username);

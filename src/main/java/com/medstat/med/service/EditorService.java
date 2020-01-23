@@ -26,7 +26,7 @@ public class EditorService {
 
         Optional<User> byId = userRepo.findById(user.getId());
         if (byId.isPresent()) {
-            model.addAttribute("users", userRepo.findAll().stream()
+            model.addAttribute("users", ((List<User>) userRepo.findAll()).stream()
                     .filter(u -> u.getRoles().contains(Role.USER) &&
                             !u.getRoles().contains(Role.ADMIN) &&
                             !u.getRoles().contains(Role.EDITOR))
@@ -38,7 +38,7 @@ public class EditorService {
 
     }
 
-    public String editor_control_spec_user(Model model, User user, Long id) {
+    public String editor_control_spec_user(Model model, User user, String id) {
         Optional<User> byIdEditor = userRepo.findById(user.getId());
 
         Optional<User> byIdToEdit = userRepo.findById(id);
@@ -51,7 +51,7 @@ public class EditorService {
         return "user_edit";
     }
 
-    public String modificate_spec_user(String username, Long userId, Map<String, String> form) {
+    public String modificate_spec_user(String username, String userId, Map<String, String> form) {
 
         Optional<User> byIdToEdit = userRepo.findById(userId);
         if (byIdToEdit.isPresent()) {

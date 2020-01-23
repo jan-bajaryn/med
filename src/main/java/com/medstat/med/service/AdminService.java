@@ -30,7 +30,7 @@ public class AdminService {
 
     }
 
-    public String admin_control_spec_user(Model model, User user, Long id) {
+    public String admin_control_spec_user(Model model, User user, String id) {
         Optional<User> byIdEditor = userRepo.findById(user.getId());
 
         Optional<User> byIdToEdit = userRepo.findById(id);
@@ -44,7 +44,7 @@ public class AdminService {
 
     }
 
-    public String modificate_spec_user(String username, Long userId, Map<String, String> form) {
+    public String modificate_spec_user(String username, String userId, Map<String, String> form) {
 
         Optional<User> byIdToEdit = userRepo.findById(userId);
         if (byIdToEdit.isPresent()) {

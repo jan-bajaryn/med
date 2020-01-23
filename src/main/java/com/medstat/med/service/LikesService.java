@@ -3,28 +3,24 @@ package com.medstat.med.service;
 import com.medstat.med.domain.Mylike;
 import com.medstat.med.domain.Note;
 import com.medstat.med.domain.User;
-import com.medstat.med.domain.keys.MylikeKey;
-import com.medstat.med.repos.MyLikeRepo;
 import com.medstat.med.repos.NoteRepo;
 import com.medstat.med.repos.UserRepo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 import java.util.Optional;
 
 @Service
 @Slf4j
 public class LikesService {
 
-    private final MyLikeRepo myLikeRepo;
     private final UserRepo userRepo;
     private final NoteRepo noteRepo;
 
     @Autowired
-    public LikesService(MyLikeRepo myLikeRepo, UserRepo userRepo, NoteRepo noteRepo) {
-        this.myLikeRepo = myLikeRepo;
+    public LikesService(UserRepo userRepo, NoteRepo noteRepo) {
         this.userRepo = userRepo;
         this.noteRepo = noteRepo;
     }
@@ -32,56 +28,54 @@ public class LikesService {
     //note implemented
     public boolean addLike(User user, Note note) {
         try {
-            MylikeKey mylikeKey = new MylikeKey(user.getId(), note.getId());
-            myLikeRepo.save(Mylike.builder().mylikeKey(mylikeKey)
-                    .author(user)
-                    .note(note)
-                    .build());
+            note.getMylikes().add(Mylike.builder().authorId(user.getId()).build());
+            noteRepo.save(note);
             return true;
         } catch (Exception e) {
             return false;
         }
     }
 
-    public int addUserLike(User user, Long id) {
+    public int addUserLike(User user, String id) {
         Optional<User> byIdUser = userRepo.findById(user.getId());
         Optional<Note> byIdNote = noteRepo.findById(id);
 
-        Mylike mylike_test = myLikeRepo.findByAuthor_IdAndNote_Id(user.getId(), id);
         Note note = byIdNote.get();
-        if (byIdUser.isPresent() && byIdNote.isPresent() && mylike_test == null) {
-            MylikeKey mylikeKey = new MylikeKey(byIdUser.get().getId(), note.getId());
-            Mylike mylike = Mylike.builder().mylikeKey(mylikeKey)
-                    .author(byIdUser.get())
-                    .note(note)
-                    .build();
-            myLikeRepo.save(mylike);
-            log.info("mylike have been huccessfully saved");
-        } else if (mylike_test != null) {
 
-            delete_like(mylike_test, note);
 
+//        Mylike mylike_test = myLikeRepo.findByAuthor_IdAndNote_Id(user.getId(), id);
+        Mylike myLikeTest = note.getMylikes().stream()
+                .filter(l -> l.getAuthorId().equals(user.getId()))
+                .findAny().orElse(null);
+
+
+        if (byIdUser.isPresent() && myLikeTest == null) {
+            note.getMylikes().add(Mylike.builder().authorId(user.getId()).build());
+            noteRepo.save(note);
+            log.info("mylike have been successfully saved");
+        } else if (myLikeTest != null) {
+            deleteLike(myLikeTest, note);
         }
-
-        return myLikeRepo.countAllByNote_Id(id);
+        return note.getMylikes().size();
     }
 
     @Transactional
-    public void delete_like(Mylike mylike_test, Note note) {
-        note.getMylikes().remove(mylike_test);
+    public void deleteLike(Mylike myLikeTest, Note note) {
+        note.getMylikes().remove(myLikeTest);
         noteRepo.save(note);
-        myLikeRepo.delete(mylike_test);
     }
 
-    public boolean isLikeExists(User user, Long note_id) {
+    public boolean isLikeExists(User user, String noteId) {
         Optional<User> byIdUser = userRepo.findById(user.getId());
-        Optional<Note> byIdNote = noteRepo.findById(note_id);
+        Optional<Note> byIdNote = noteRepo.findById(noteId);
         if (byIdNote.isPresent() && byIdUser.isPresent()) {
             Note note = byIdNote.get();
-            User user_get = byIdUser.get();
+            User userFound = byIdUser.get();
 
-            if (myLikeRepo.findByAuthor_IdAndNote_Id(user_get.getId(), note.getId()) != null)
-                return true;
+            Mylike mylike = note.getMylikes().stream()
+                    .filter(l -> l.getAuthorId().equals(userFound.getId()))
+                    .findAny().orElse(null);
+            return mylike != null;
         }
         return false;
     }

@@ -3,18 +3,17 @@ package com.medstat.med.controllers;
 import com.medstat.med.domain.*;
 import com.medstat.med.repos.NoteRepo;
 import com.medstat.med.repos.UserRepo;
-import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 
@@ -38,14 +37,19 @@ public class SharedController {
     }
 
     @GetMapping("note_page/{id}")
-    public String note_page(@PathVariable Long id,
+    public String note_page(@PathVariable String id,
                             Model model,
                             //user added
                             @AuthenticationPrincipal User user) {
         Optional<Note> byId = noteRepo.findById(id);
         if (byId.isPresent()) {
             Note note = byId.get();
-            note.getComments().sort(Comparator.comparing(Comment::getId));
+
+            if (note.getComments() == null) {
+                note.setComments(new ArrayList<>());
+            } else {
+                note.getComments().sort(Comparator.comparing(Comment::getId));
+            }
             model.addAttribute("note", note);
             //working with user
             if (user != null) {
@@ -69,8 +73,14 @@ public class SharedController {
 
     @GetMapping("/search")
     public String search(Model model) {
-        model.addAttribute("notes", noteRepo.findAll());
+        Map<Note, String> collect = toNoteUsernameMap((List<Note>) noteRepo.findAll());
+        model.addAttribute("notes", collect.entrySet());
         return "shared/search";
+    }
+
+    private Map<Note, String> toNoteUsernameMap(List<Note> notes) {
+        return (notes).stream()
+                .collect(Collectors.toMap(e -> e, e -> userRepo.findById(e.getAuthorId()).get().getUsername()));
     }
 
     @GetMapping("/filter")
@@ -79,7 +89,7 @@ public class SharedController {
         if (filter == null || filter.isEmpty())
             return "redirect:/shared/search";
 
-        List<Note> notes = noteRepo.findAll().stream()
+        List<Note> notes = ((List<Note>) noteRepo.findAll()).stream()
                 .filter(note -> {
                     List<String> noteNames = note.getDiseases().stream()
                             .map(Disease::getName)
@@ -92,8 +102,9 @@ public class SharedController {
                     return false;
                 })
                 .collect(Collectors.toList());
+        Map<Note, String> collect = toNoteUsernameMap(notes);
 
-        model.addAttribute("notes", notes);
+        model.addAttribute("notes", collect.entrySet());
         return "shared/search";
     }
 

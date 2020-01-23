@@ -2,10 +2,7 @@ package com.medstat.med.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.medstat.med.domain.*;
-import com.medstat.med.repos.DiseaseRepo;
-import com.medstat.med.repos.DrugRepo;
 import com.medstat.med.repos.NoteRepo;
-import com.medstat.med.repos.SymptomRepo;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +12,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
@@ -31,17 +27,11 @@ public class NoteService {
 
     private final NoteRepo noteRepo;
     private final ObjectMapper mapper;
-    private final DrugRepo drugRepo;
-    private final SymptomRepo symptomRepo;
-    private final DiseaseRepo diseaseRepo;
 
     @Autowired
-    public NoteService(NoteRepo noteRepo, ObjectMapper mapper, DrugRepo drugRepo, SymptomRepo symptomRepo, DiseaseRepo diseaseRepo) {
+    public NoteService(NoteRepo noteRepo, ObjectMapper mapper) {
         this.noteRepo = noteRepo;
         this.mapper = mapper;
-        this.drugRepo = drugRepo;
-        this.symptomRepo = symptomRepo;
-        this.diseaseRepo = diseaseRepo;
     }
 
     public boolean addNote(@NonNull User user,
@@ -54,7 +44,7 @@ public class NoteService {
         try {
             noteRepo.save(Note.builder()
                     .drugs(drugs)
-                    .author(user)
+                    .authorId(user.getId())
                     .comment(comment)
                     .symptoms(symptoms)
                     .diseases(diseases)
@@ -69,50 +59,38 @@ public class NoteService {
     }
 
     public boolean addNoteCascade(User user,
-                                  String drugs_json,
-                                  String diseases_json,
-                                  String symptoms_json,
+                                  String drugsJson,
+                                  String diseasesJson,
+                                  String symptomsJson,
                                   String comment,
                                   String name,
                                   MultipartFile file) throws IOException {
 
-        log.info("file = {}",file);
+        log.info("file = {}", file);
 
         String image = null;
 
-        List<String> drugs = new ArrayList<>();
-        List<String> diseases = new ArrayList<>();
-        List<String> symptoms = new ArrayList<>();
+        List<String> drugs;
+        List<String> diseases;
+        List<String> symptoms;
 
-        drugs = mapper.readValue(drugs_json, List.class);
-        diseases = mapper.readValue(diseases_json, List.class);
-        symptoms = mapper.readValue(symptoms_json, List.class);
+        drugs = mapper.readValue(drugsJson, List.class);
+        diseases = mapper.readValue(diseasesJson, List.class);
+        symptoms = mapper.readValue(symptomsJson, List.class);
 
         log.info("drugs = {}", drugs);
         log.info("diseases = {}", diseases);
         log.info("symptoms = {}", symptoms);
-        Set<Drug> drugs_set = drugs.stream()
-                .map(d -> {
-                    Drug drug = drugRepo.findByName(d);
-                    return drug == null ? Drug.builder().name(d).build() : drug;
-                })
-                .peek(drugRepo::save)
+        Set<Drug> drugSet = drugs.stream()
+                .map(d -> Drug.builder().name(d).build())
                 .collect(Collectors.toSet());
 
-        Set<Disease> diseases_set = diseases.stream()
-                .map(d -> {
-                    Disease disease = diseaseRepo.findByName(d);
-                    return disease == null ? Disease.builder().name(d).build() : disease;
-                })
-                .peek(diseaseRepo::save)
+        Set<Disease> diseasesSet = diseases.stream()
+                .map(d -> Disease.builder().name(d).build())
                 .collect(Collectors.toSet());
 
-        Set<Symptom> symptoms_set = symptoms.stream()
-                .map(s -> {
-                    Symptom symptom = symptomRepo.findByName(s);
-                    return symptom == null ? Symptom.builder().name(s).build() : symptom;
-                })
-                .peek(symptomRepo::save)
+        Set<Symptom> symptomsSet = symptoms.stream()
+                .map(s -> Symptom.builder().name(s).build())
                 .collect(Collectors.toSet());
 
         if (file != null && !file.getOriginalFilename().isEmpty()) {
@@ -131,7 +109,7 @@ public class NoteService {
         }
 
 
-        return addNote(user, name, comment, drugs_set, symptoms_set, diseases_set,image);
+        return addNote(user, name, comment, drugSet, symptomsSet, diseasesSet, image);
 
     }
 }
